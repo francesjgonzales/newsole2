@@ -16,6 +16,7 @@ django-allauth = "*"
 psycopg2-binary = "*"
 python-dotenv = "*"
 django-debug-toolbar = "*"
+gunicorn = "*"
 
 [dev-packages]
 
