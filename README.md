@@ -1,1 +1,45 @@
 # newsole2
+
+my_django_app/
+├── accounts/ # User authentication app
+│ ├── migrations/
+│ ├── templates/
+│ │ └── registration/
+│ ├── **init**.py
+│ ├── admin.py
+│ ├── apps.py
+│ ├── forms.py
+│ ├── models.py
+│ ├── tests.py
+│ └── views.py
+├── core/ # Main business logic app
+│ ├── migrations/
+│ ├── templates/
+│ │ └── home.html
+│ │ └── about.html
+│ │ └── contact.html
+│ │ └── base.html
+│ ├── filters.py
+│ ├── **init**.py
+│ ├── admin.py
+│ ├── apps.py
+│ ├── models.py
+│ ├── tests.py
+│ ├── urls.py
+│ └── views.py
+├── config/ # Django settings package
+│ ├── **init**.py
+│ ├── asgi.py
+│ ├── settings.py
+│ ├── urls.py
+│ └── wsgi.py
+├── media/ # Uploaded media (Cloudinary in production)
+├── staticfiles/ # Collected static files
+├── .gitignore
+├── manage.py
+├── Pipfile
+├── Pipfile.lock
+├── Procfile
+├── README.md
+├── requirements.txt
+└── runtime.txt
