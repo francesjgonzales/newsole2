@@ -30,7 +30,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv("DEBUG", "False") == "True"
+DEBUG = os.getenv("DEBUG", "True") == "True"
 ALLOWED_HOSTS = ["newsole2.onrender.com", "localhost", "127.0.0.1"]
 
 
@@ -57,8 +57,8 @@ CRISPY_TEMPLATE_PACK = "bootstrap5"
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': 'dmq3kvtzu',
-    'API_KEY': '363346282119771',
+    'CLOUD_NAME': os.getenv('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': os.getenv('CLOUDINARY_API_KEY'),
     'API_SECRET': os.getenv("API_SECRET"),
 }
 
