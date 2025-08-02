@@ -14,10 +14,13 @@ Worldwide shipping.{% endblock %}
     <p>Price: ${{ shoe.price }}</p>
     <p>Description: {{ shoe.description }}</p>
     <p>Product Code: {{ shoe.product_code }}</p>
+    <p>Categories:
+        {% for category in shoe.categories %}
+        <span class="badge bg-info">{{ category }}</span>
+        {% endfor %}
+        <button type="submit">Add to Cart</button>
+
 </div>
-<form method="post" action="{% url 'add_to_cart' shoe.id %       %}">
-    {% csrf_token %}
-    <button type="submit">Add to Cart</button>
-</form>
+
 
 {% endblock %}
