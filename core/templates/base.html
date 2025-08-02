@@ -5,16 +5,26 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %}My Site{% endblock %}</title>
+    <title>{% block title %}New Sole | Limited Edition Sneakers{% endblock %}</title>
+    <meta name="description"
+        content="{% block meta_description %}Discover rare rubber shoes and exclusive sneaker drops at New Sole.{% endblock %}">
+    <meta name="keywords" content="sneakers, limited edition, exclusive drops, New Sole, rare rubber shoes">
+    <meta name="description"
+        content="Shop the New Sole, an exclusive drop available only at New Sole. Limited pairs. Worldwide shipping." />
+    <meta name="author" content="Frances Gonzales">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 
 <body>
     <header>
-        <h1>My Website</h1>
+        <h1>New Sole</h1>
         <nav>
             <a href="{% url 'home' %}">Home</a>
             <a href="{% url 'about' %}">About</a>
+            <a href="{% url 'shoe_list' %}">Shoes</a>
+            <a href="{% url 'add_to_cart' %}">Cart</a>
+            <a href="{% url 'contact_form' %}">Contact</a>
         </nav>
     </header>
 

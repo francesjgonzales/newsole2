@@ -2,8 +2,53 @@
 {% extends "base.html" %}
 
 {% block title %}Contact | My Site{% endblock %}
+{% load crispy_forms_tags %}
+{% load static %}
 
+{% block meta_description %}
+Contact us for inquiries, feedback, or support. We're here to help you with any questions you may have about our
+products or services.
+{% endblock %}
+
+{% block meta_keywords %}
+contact, inquiries, feedback, support, customer service, New Sole
+{% endblock %}
+
+{% block meta_author %}
+Frances Gonzales
+{% endblock %}
+
+{% block meta_viewport %}
+width=device-width, initial-scale=1.0
+{% endblock %}
 {% block content %}
-<h2>Contact Us</h2>
-<p>This is the contact page content.</p>
+<div class="container">
+
+    <h1>Contact Us</h1>
+    <div class="row">
+
+        <div class="col-md-3">
+            <h3>Get in Touch</h3>
+            <p>If you have any questions or feedback, feel free to reach out to us.</p>
+            <p>Email: <a href="mailto:info@thenewsole.com">info@thenewsole.com</a></p>
+        </div>
+        <div class="col-md-9">
+            <form method="POST" autocomplete="off">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="row mt-5">
+        <div class="col-md-12">
+            <h3>Our Location</h3>
+            <p>123 New Sole Street, Footwear City, FC 12345</p>
+            <p>Phone: +1 (555) 123-4567</p>
+            <p>Follow us on social media for the latest updates!</p>
+        </div>
+        </form>
+    </div>
+</div>
 {% endblock %}

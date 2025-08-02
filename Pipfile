@@ -17,6 +17,9 @@ psycopg2-binary = "*"
 python-dotenv = "*"
 django-debug-toolbar = "*"
 gunicorn = "*"
+python-slugify = "*"
+django-multiselectfield = "*"
+django-crispy-forms = "*"
 
 [dev-packages]
 
