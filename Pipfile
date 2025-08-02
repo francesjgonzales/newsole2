@@ -20,6 +20,7 @@ gunicorn = "*"
 python-slugify = "*"
 django-multiselectfield = "*"
 django-crispy-forms = "*"
+whitenoise = "*"
 
 [dev-packages]
 

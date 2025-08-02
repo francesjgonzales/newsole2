@@ -69,7 +69,7 @@ CLOUDINARY_STORAGE = {
 cloudinary.config( 
     cloud_name = os.getenv('CLOUDINARY_CLOUD_NAME'), 
     api_key = os.getenv('CLOUDINARY_API_KEY'), 
-    api_secret = os.getenv("API_SECRET"),
+    api_secret = os.getenv("CLOUDINARY_API_SECRET"),
     secure=True
 )
 
@@ -83,6 +83,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -175,3 +177,6 @@ MEDIA_URL = '/media/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# Whitenoise settings for serving static files in production    
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
