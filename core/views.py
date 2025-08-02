@@ -10,6 +10,9 @@ from .models import Shoe
 def home(request):
     return render(request, 'home.html')
 
+def about(request):
+    return render(request, 'about.html')
+
 def shoe_list(request):
     items = Shoe.objects.all()  # Fetch all Shoe objects from the database
     return render(request, 'shoe_list.html', {"shoes": items})    
@@ -17,9 +20,6 @@ def shoe_list(request):
 def shoe_detail(request, slug):
     shoe = Shoe.objects.get(slug=slug)  # Fetch the specific shoe by slug
     return render(request, 'shoe_detail.html', {"shoe": shoe})
-
-def about(request):
-    return render(request, 'about.html')
 
 def add_to_cart(request):
     return render(request, 'cart.html')
