@@ -5,22 +5,28 @@ Worldwide shipping.{% endblock %}
 {% block meta_keywords %}{{ shoe.name }}, limited edition sneakers, exclusive drops, New Sole{% endblock %}
 
 
-{% include 'breadcrumbs.html' %}
 {% block content %}
-<div class="shoe-detail">
-    <h2>{{ shoe.name }}</h2>
-    <img src="{{ shoe.image.url }}" alt="{{ shoe.name }}">
-    <p>{{ shoe.description }}</p>
-    <p>Price: ${{ shoe.price }}</p>
-    <p>Description: {{ shoe.description }}</p>
-    <p>Product Code: {{ shoe.product_code }}</p>
-    <p>Categories:
-        {% for category in shoe.categories %}
-        <span class="badge bg-info">{{ category }}</span>
-        {% endfor %}
-        <button type="submit">Add to Cart</button>
+<div class="container">
+    {% include 'breadcrumbs.html' %}
+    <h1>This is a product detail page </h1>
+
+    <div class="shoe-detail">
+        <h2>{{ shoe.name }}</h2>
+        <img src="{{ shoe.image.url }}" alt="{{ shoe.name }}">
+        <p>{{ shoe.description }}</p>
+        <p>Price: ${{ shoe.price }}</p>
+        <p>Description: {{ shoe.description }}</p>
+        <p>Product Code: {{ shoe.product_code }}</p>
+        <p>Categories:
+            {% for category in shoe.categories %}
+            <span class="badge bg-info">{{ category }}</span>
+            {% endfor %}
+            <a href="{% url 'add_to_cart' shoe.id %}">Add to Cart</a>
+
+
+
+    </div>
 
 </div>
-
 
 {% endblock %}

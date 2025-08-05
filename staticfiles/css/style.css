@@ -1,0 +1,48 @@
+.hero {
+  background-color: aquamarine;
+  /* height: 50vh; */
+}
+
+.hero-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.trusted-partners,
+.product-cards {
+  display: flex;
+  justify-content: center;
+  /* align-items: center; */
+  flex-wrap: wrap;
+  margin-top: 20px;
+  width: 15vw;
+}
+.partner-logos {
+  /* width: 100px; */
+  height: 20vh;
+  margin: 10px;
+}
+
+.btn {
+  background-color: #1b1b1c;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.btn:hover {
+  background-color: #fbf9f9;
+}
+
+.btn-small {
+  color: #1b1b1c;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+}
+.btn-small:hover {
+  color: #1b1b1c;
+  text-decoration: underline;
+}

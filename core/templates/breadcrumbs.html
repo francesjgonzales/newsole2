@@ -1,8 +1,21 @@
 <div class="container" id="breadcrumb-container">
     <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
         <ol class="breadcrumb">
+            {% if shoes %}
             <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Shoes</li>
+            <li class="breadcrumb-item">Shoes</li>
+            {% endif %}
+
+            {% if shoe.slug %}
+            <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'shoe_list' %}">Shoes</a></li>
+            <li class="breadcrumb-item">{{ shoe.name }}</li>
+            {% endif %}
+
+
+            {% if contact_form %}
+            <li class="breadcrumb-item"><a href="{% url 'contact_form' %}">Contact</a></li>
+            {% endif %}
         </ol>
     </nav>
 </div>

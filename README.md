@@ -43,3 +43,18 @@ my_django_app/
 ├── README.md
 ├── requirements.txt
 └── runtime.txt
+
+## Start Postgres locally
+
+Start PostgreSQL locally (macOS)
+`brew services start postgresql`
+
+Access PostgrSQL shell in local terminal:
+`psql postgres`
+
+Check if PostgreSQL is running
+`brew services list`
+
+## Test .env variables
+
+`python manage.py shell`

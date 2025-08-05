@@ -31,7 +31,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DEBUG", "False") == "True"
-ALLOWED_HOSTS = ["newsole2.onrender.com", "localhost", "127.0.0.1"]
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -113,16 +113,14 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv("DB_NAME"),
-        'USER': os.getenv("DB_USER"),
-        'PASSWORD': os.getenv("DB_PASSWORD"),
-        'HOST': os.getenv("DB_HOST"),
-        'PORT': os.getenv("DB_PORT", "5432"),
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'mydb',
+        'USER': 'newsoleadmin',
+        'PASSWORD': 'focus1234',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
-
-print("HOST:", os.getenv("DB_HOST"))
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -158,7 +156,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+MEDIA_URL = '/media/'
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -172,12 +174,6 @@ INTERNAL_IPS = ['127.0.0.1']
 if DEBUG:
     MIDDLEWARE += ['debug_toolbar.middleware.DebugToolbarMiddleware']
 
-
-STATIC_URL = '/static/'
-MEDIA_URL = '/media/'
-
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Whitenoise settings for serving static files in production    
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'

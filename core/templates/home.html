@@ -1,11 +1,60 @@
 <!-- templates/home.html -->
 {% extends "base.html" %}
-
-{% block title %}Home | My Site{% endblock %}
-
-
-
+{% load static %}
+{% load cloudinary %}
 {% block content %}
-<h2>Welcome to New Sole</h2>
-<p>This is the homepage content.</p>
+
+
+<div class="container-fluid hero">
+    <div class=" mx-5 p-5">
+        <h1 class="text-center">Welcome to New Sole</h1>
+        <p class="text-center">Your one-stop shop for the latest in footwear fashion.</p>
+        <p class="text-center">Explore our collection and find your perfect pair today!</p>
+        <p class="text-center mt-5"><a href="{% url 'shoe_list' %}" class="btn">Shop Now</a></p>
+    </div>
+</div>
+<div class="container my-5">
+    <h3 class="text-start">Brand Partners</h3>
+    <div class="row">
+        <div class="col">
+            <img src="{% static 'img/Logo-1.png' %}" alt="Partner Logos" class="partner-logos">
+
+        </div>
+        <div class="col">
+            <img src="{% static 'img/Logo-2.png' %}" alt="Partner Logos" class="partner-logos">
+        </div>
+        <div class="col">
+            <img src="{% static 'img/Logo-3.png' %}" alt="Partner Logos" class="partner-logos">
+        </div>
+        <div class="col">
+            <img src="{% static 'img/Logo-1.png' %}" alt="Partner Logos" class="partner-logos">
+
+        </div>
+        <div class="col">
+            <img src="{% static 'img/Logo-2.png' %}" alt="Partner Logos" class="partner-logos">
+        </div>
+
+    </div>
+</div>
+<div class="container mt-5 text-start">
+    <h3>Popular Brands</h3>
+
+    <div class="row">
+        {% for shoe in shoes %}
+        <div class="col-sm-6 col-md-4 col-lg-3 mb-4">
+            <div class="card mb-4 product-cards">
+                <img src="{{ shoe.image.url }}" alt="{{ shoe.name }}" class="img-thumbnail shoe-image">
+                <div class="card-body">
+                    <p><small class="badge rounded-pill text-bg-info">{{ shoe.categories|join:" , " }}</small></p>
+                    <h5 class="card-title">{{ shoe.name }}</h5>
+                    <h6 class="card-text" style="font-weight: bold;">${{ shoe.price }}</h6>
+                    <p><small class="card-text">Produce Code: {{ shoe.product_code }}</small></p>
+                    <p class="fs-6"><a href="{% url 'shoe_detail' shoe.slug %}" class=" btn">View
+                            Details</a></p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
 {% endblock %}

@@ -1,9 +1,43 @@
 <!-- templates/about.html -->
 {% extends "base.html" %}
 
-{% block title %}About | My Site{% endblock %}
-
 {% block content %}
-<h2>Cart</h2>
-<p>This is the cart page content.</p>
+
+<div class="container mt-5">
+    <h2>Cart</h2>
+    <ul>
+
+
+        {% if not shoes %}
+        <h3 class="text-center">Your Cart is Empty</h3>
+        <p class="text-center">Add items to your cart to proceed with the checkout.</p>
+        <p class="text-center">Browse our <a href="{% url 'shoe_list' %}">shoe collection</a> to find your perfect pair.
+        <p>For any inquiries, please contact us at <a href="mailto:info@newsole.com">info@newsole.com</a>.</p>
+        <p>Follow us on social media for updates and exclusive offers!</p>
+        <p>Thank you for choosing New Sole!</p>
+        </p> {% endif %}
+
+        {% if shoes %}
+        <h3 class="text-center">Items in Your Cart</h3>
+        <p class="text-center">Review your selected items below:</p>
+        {% for shoe in shoes %}
+        <li>
+            <img src="{{ shoe.image.url }}" alt="{{ shoe.name }}" class="img-thumbnail shoe-image">
+            {{ shoe.name }} - ${{ shoe.price }}
+            <a href="{% url 'remove_from_cart' shoe.id %}">Remove</a>
+        </li>
+        {% endfor %}
+
+        <p class="text-center">You can remove items or proceed to checkout.</p>
+        <p>For any inquiries, please contact us at <a href="mailto:info@newsole.com">info@newsole.com</a>.</p>
+        <p>Follow us on social media for updates and exclusive offers!</p>
+        <p>Thank you for choosing New Sole!</p>
+        </p>
+        {% endif %}
+
+    </ul>
+
+</div>
+
+
 {% endblock %}

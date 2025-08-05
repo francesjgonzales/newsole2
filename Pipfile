@@ -14,13 +14,14 @@ cloudinary = "*"
 django-cloudinary-storage = "*"
 django-allauth = "*"
 psycopg2-binary = "*"
-python-dotenv = "*"
 django-debug-toolbar = "*"
 gunicorn = "*"
 python-slugify = "*"
 django-multiselectfield = "*"
 django-crispy-forms = "*"
 whitenoise = "*"
+dj-database-url = "*"
+python-dotenv = "*"
 
 [dev-packages]
 

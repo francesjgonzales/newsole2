@@ -39,13 +39,6 @@ class Shoe(models.Model):
     def __str__(self):
         return self.name
 
-class AddToCartForm(models.Model):
-    quantity = models.IntegerField(default=1)
-    product_id = models.IntegerField()
-
-    def __str__(self):
-        return f"Add {self.quantity} of product ID {self.product_id} to cart"
-
 class ContactForm(models.Model):
     name = models.CharField(max_length=100)
     email = models.EmailField()
