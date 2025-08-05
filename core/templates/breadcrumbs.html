@@ -12,6 +12,11 @@
             <li class="breadcrumb-item">{{ shoe.name }}</li>
             {% endif %}
 
+            {% if cart %}
+            <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'cart' %}">Cart</a></li>
+            {% endif %}
+
 
             {% if contact_form %}
             <li class="breadcrumb-item"><a href="{% url 'contact_form' %}">Contact</a></li>
