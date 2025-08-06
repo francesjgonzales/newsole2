@@ -40,7 +40,16 @@ def remove_from_cart(request, shoe_id):
 def view_cart(request):
     cart = request.session.get('cart', [])
     shoes = Shoe.objects.filter(id__in=cart)
-    return render(request, 'cart.html', {"shoes": shoes})
+    grand_price = sum(shoe.price for shoe in shoes) if shoes else 0.00
+    return render(request, 'cart.html', {"shoes": shoes, "grand_price": grand_price})
+
+def checkout(request):
+    checkout = request.session.get('cart', [])
+    shoes = Shoe.objects.filter(id__in=checkout)
+    # total_price = sum(shoe.price for shoe in shoes)
+    total_price = sum(shoe.price for shoe in shoes) if shoes else 0.00
+
+    return render(request, 'checkout.html', {"shoes": shoes, "total_price": total_price})
 
 @csrf_protect
 def contact_form(request):

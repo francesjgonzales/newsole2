@@ -1,0 +1,30 @@
+<!-- templates/about.html -->
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-5">
+    {% if shoes %}
+    <h2>Checkout</h2>
+    <p>Review your selected items below before proceeding with the payment.</p>
+    <ul>
+        {% for shoe in shoes %}
+        <li>
+            <img src="{{ shoe.image.url }}" alt="{{ shoe.name }}" class="img-thumbnail shoe-image">
+            {{ shoe.name }} - ${{ shoe.price }}
+            <a href="{% url 'remove_from_cart' shoe.id %}">Remove</a>
+        </li>
+        {% endfor %}
+
+        {% endif %}
+
+        <p><strong>Total: ${{ total_price }}</strong></p>
+
+        <a href="{% url 'checkout' %}" class="btn btn-success">Proceed to Checkout</a>
+        <p>For any inquiries, please contact us at <a href="mailto:info@newsole.com">info@newsole.com</a>.</p>
+        <p>Follow us on social media for updates and exclusive offers!</p>
+        <p>Thank you for choosing New Sole!</p>
+
+
+</div>
+{% endblock %}
