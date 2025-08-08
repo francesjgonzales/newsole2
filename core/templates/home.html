@@ -42,8 +42,12 @@
     <div class="row">
         {% for shoe in shoes %}
         <div class="col-sm-6 col-md-4 col-lg-3 mb-4">
-            <div class="card mb-4 product-cards">
-                <img src="{{ shoe.image.url }}" alt="{{ shoe.name }}" class="img-thumbnail shoe-image">
+
+            <div class=" mb-4 product-cards">
+                <div class="row align-items-center" style="height: 200px;">
+                    <img src="{{ shoe.image.url }}" alt="{{ shoe.name }}" class=" object-fit-scale">
+                </div>
+
                 <div class="card-body">
                     <p><small class="badge rounded-pill text-bg-info">{{ shoe.categories|join:" , " }}</small></p>
                     <h5 class="card-title">{{ shoe.name }}</h5>

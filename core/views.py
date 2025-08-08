@@ -9,8 +9,8 @@ from django.views.decorators.csrf import csrf_protect
 from .models import Shoe
 
 def home(request):
-    latest = Shoe.objects.filter(categories='POPULAR')  # Fetch the specific shoe by ID
-    return render(request, 'home.html', {"shoes": latest})
+    popular = Shoe.objects.filter(categories__contains='POPULAR')  # Fetch the specific shoe by ID
+    return render(request, 'home.html', {"shoes": popular})
 
 def about(request):
     return render(request, 'about.html')

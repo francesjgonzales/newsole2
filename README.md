@@ -44,6 +44,10 @@ my_django_app/
 ├── requirements.txt
 └── runtime.txt
 
+## Uses sqlite as database for local building
+
+## Uses Postgres for production
+
 ## Start Postgres locally
 
 Start PostgreSQL locally (macOS)

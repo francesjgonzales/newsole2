@@ -46,3 +46,8 @@
   color: #1b1b1c;
   text-decoration: underline;
 }
+
+.shoe-image {
+  width: 100%;
+  height: auto;
+}
