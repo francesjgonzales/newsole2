@@ -6,39 +6,87 @@
 <div class="container mt-5">
     {% include 'breadcrumbs.html' %}
 
-    <h2>Cart</h2>
-    <ul>
+    <h2>Your Cart</h2>
 
-
-        {% if not shoes %}
-        <h3 class="text-center">Your Cart is Empty</h3>
-        <p class="text-center">Add items to your cart to proceed with the checkout.</p>
-        <p class="text-center">Browse our <a href="{% url 'shoe_list' %}">shoe collection</a> to find your perfect pair.
-
-        </p> {% endif %}
-
-        {% if shoes %}
-        <h3 class="text-center">Items in Your Cart</h3>
-        <p class="text-center">Review your selected items below:</p>
+    {% if shoes %}
+    <table>
+        <tr>
+            <th>Item</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Item Total Price</th>
+            <th>Action</th>
+        </tr>
         {% for shoe in shoes %}
-        <li>
-            <img src="{{ shoe.image.url }}" alt="{{ shoe.name }}" class="img-thumbnail shoe-image">
-            {{ shoe.name }} - ${{ shoe.price }}
-            <a href="{% url 'remove_from_cart' shoe.id %}">Remove</a>
-
-            <a href="{% url 'checkout' %}">Checkout</a>
-
-        </li>
-
+        <tr>
+            <td><img src="{{ shoe.image.url }}" alt="{{ shoe.name }}" class="card-img-top"
+                    style="height:40px; width:auto"></td>
+            <td>{{ shoe.name }}</td>
+            <td>${{ shoe.price }}</td>
+            <td>{{ shoe.cart_quantity }}</td>
+            <td>{{ shoe.line_total }}</td>
+            <td>
+                <a href="{% url 'add_cart' shoe.id %}">+</a>
+                <a href="{% url 'remove_from_cart' shoe.id %}">-</a>
+            </td>
+        </tr>
         {% endfor %}
+    </table>
 
-        {% endif %}
-        <p><strong>Total: ${{ total_price }}</strong></p>
-
-
-    </ul>
+    <p><strong>Grand Total: ${{ cart_total|floatformat:2 }}</strong></p>
+    {% else %}
+    <p>Your cart is empty.</p>
+    {% endif %}
 
 </div>
 
+<!-- <div class="container">
+    {% for shoe in shoes %}
+    <table>
+        <tr>
+            <td>{{ shoe.name }}</td>
+            <td>{{ shoe.cart_quantity }}</td> <br>
+            <td>${{ shoe.price }}</td>
+            <td>${{ shoe.price|floatformat:2|add:0.0|floatformat:2 }}</td>
+            <td>cart total: ${{ cart_total }}</td>
+        </tr>
+
+    </table>
+    {% endfor %}
+
+</div>
+
+
+<div class="container">
+    <div class="container">
+        <h1>Shoe Inventory</h1>
+        <table cellpadding="5">
+            <tr>
+                <th>Name</th>
+                <th>Quantity</th>
+                <th>Action</th>
+            </tr>
+            {% for shoe in shoes %}
+            <tr>
+                <td>{{ shoe.name }}</td>
+                <td>{{ shoe.price }}</td>
+                <td>{{ shoe.quantity }}</td>
+                <td>
+                    <form action="{% url 'increase_quantity' shoe.id %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit">+</button>
+                    </form>
+                    <form action="{% url 'decrease_quantity' shoe.id %}" method="post" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit">-</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+ -->
 
 {% endblock %}

@@ -17,11 +17,12 @@ Worldwide shipping.{% endblock %}
         <p>Price: ${{ shoe.price }}</p>
         <p>Description: {{ shoe.description }}</p>
         <p>Product Code: {{ shoe.product_code }}</p>
+        <p>Quantity: {{ shoe.quantity }}</p>
         <p>Categories:
             {% for category in shoe.categories %}
             <span class="badge bg-info">{{ category }}</span>
             {% endfor %}
-            <a href="{% url 'add_to_cart' shoe.id %}">Add to Cart</a>
+            <a href="{% url 'add_cart' shoe.id %}">Add to Cart</a>
 
 
 

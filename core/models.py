@@ -24,6 +24,7 @@ class Shoe(models.Model):
     categories = MultiSelectField(choices=CATEGORY_CHOICES, default=['POPULAR',])
     slug = models.SlugField(max_length=100, unique=True, blank=True)
     product_code = models.CharField(max_length=20, unique=True, blank=True)
+    quantity = models.DecimalField(blank=True, max_digits=2, decimal_places=0, default=0)
 
     def save(self, *args, **kwargs):
         if not self.product_code:
@@ -48,3 +49,11 @@ class ContactForm(models.Model):
 
     def __str__(self):
         return self.name
+
+class Cart(models.Model):
+    name = models.CharField(max_length=100)
+    quantity = models.DecimalField(blank=True, max_digits=2, decimal_places=0, default=0)
+    price = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+
+    def __str__(self):
+        return self.price * self.quantity

@@ -1,0 +1,62 @@
+<!-- templates/about.html -->
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-5">
+    {% include 'breadcrumbs.html' %}
+
+    <h2>Your Cart</h2>
+
+    {% if shoes %}
+    <table>
+        <tr>
+            <th>Item</th>
+            <th>Price</th>
+            <th>Qty</th>
+            <th>Total</th>
+            <th>Action</th>
+        </tr>
+        {% for shoe in shoes %}
+        <tr>
+            <td><img src="{{ shoe.image.url }}" alt="{{ shoe.name }}" class="card-img-top"
+                    style="height:40px; width:auto"></td>
+            <td>{{ shoe.name }}</td>
+            <td>${{ shoe.price }}</td>
+            <td>{{ shoe.cart_quantity }}</td>
+            <td>${{ shoe.total_price }}</td>
+            <td>
+                <a href="{% url 'add_cart' shoe.id %}">+</a>
+            </td>
+            <td>
+                <a href="{% url 'remove_from_cart' shoe.id %}">-</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <p><strong>Grand Total: ${{ grand_price|floatformat:2 }}</strong></p>
+    {% else %}
+    <p>Your cart is empty.</p>
+    {% endif %}
+
+</div>
+
+
+<div class="container">
+    {% for shoe in shoes %}
+    <table>
+        <tr>
+            <td>{{ shoe.name }}</td>
+            <td>{{ shoe.cart_quantity }}</td>
+            <td>{{ shoe.shoe_total }}</td>
+            <td>${{ shoe.total|floatformat:2|add:0.0|floatformat:2 }}</td>
+        </tr>
+
+    </table>
+    {% endfor %}
+
+</div>
+
+
+{% endblock %}

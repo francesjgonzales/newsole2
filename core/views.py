@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 
 from core.forms import ContactForm
 from django.shortcuts import redirect
@@ -24,32 +24,65 @@ def shoe_detail(request, slug):
     return render(request, 'shoe_detail.html', {"shoe": shoe})
 
 def add_to_cart(request, shoe_id):
-    cart = request.session.get('cart', [])
-    if shoe_id not in cart:
-        cart.append(shoe_id)
+    cart = request.session.get('cart', {})
+
+    # Convert key to string for session storage
+    shoe_id_str = str(shoe_id)
+
+    if shoe_id_str in cart:
+        cart[shoe_id_str] += 1
+    else:
+        cart[shoe_id_str] = 1
+    
+    # Save cart back to session
     request.session['cart'] = cart
-    return render(request, 'cart.html', {"shoes": Shoe.objects.filter(id__in=cart)})
+    request.session.modified = True # mark session as changed
+
+    return redirect('view_cart')  # redirect instead of rendering
+
 
 def remove_from_cart(request, shoe_id):
-    cart = request.session.get('cart', [])
-    if shoe_id in cart:
-        cart.remove(shoe_id)
+    cart = request.session.get('cart', {})
+    shoe_id_str = str(shoe_id)
+
+    if shoe_id_str in cart:
+        if cart[shoe_id_str] > 1:
+            cart[shoe_id_str] -= 1  # decrease quantity by 1
+        else:
+            del cart[shoe_id_str]  # remove completely if quantity is 1
+
     request.session['cart'] = cart
-    return render(request, 'cart.html', {"shoes": Shoe.objects.filter(id__in=cart)})
+    request.session.modified = True
+
+    return redirect('view_cart')
 
 def view_cart(request):
-    cart = request.session.get('cart', [])
-    shoes = Shoe.objects.filter(id__in=cart)
-    grand_price = sum(shoe.price for shoe in shoes) if shoes else 0.00
-    return render(request, 'cart.html', {"shoes": shoes, "grand_price": grand_price})
+    cart = request.session.get('cart', {})
+    cart_number = True if cart else False
+    cart_number = bool(cart)
 
+    shoes = Shoe.objects.filter(id__in=cart.keys())
+    cart_total = 0
+
+    for shoe in shoes:
+        quantity = cart[str(shoe.id)]
+        shoe.cart_quantity = quantity
+        shoe.line_total = shoe.price * quantity
+        cart_total += shoe.line_total
+
+    return render(request, 'cart.html', {
+        "shoes": shoes,
+        "cart_total": cart_total,
+        "cart_number": cart_number
+    })
+    
 def checkout(request):
     checkout = request.session.get('cart', [])
     shoes = Shoe.objects.filter(id__in=checkout)
     # total_price = sum(shoe.price for shoe in shoes)
     total_price = sum(shoe.price for shoe in shoes) if shoes else 0.00
-
     return render(request, 'checkout.html', {"shoes": shoes, "total_price": total_price})
+
 
 @csrf_protect
 def contact_form(request):
@@ -65,5 +98,24 @@ def contact_form(request):
     else:
         form = ContactForm()
         return render(request, 'contact.html', {'form': form})
-        
-    
+
+
+
+
+# Shoe Inventory
+def increase_quantity(request, shoe_id):
+    shoe = get_object_or_404(Shoe, id=shoe_id)
+    shoes = Shoe.objects.all()
+    shoe.quantity += 1
+    for shoe in shoes:
+        shoe.total_price = shoe.price * shoe.quantity
+    shoe.save()
+    return render(request, 'cart.html', {'shoes': shoes})
+
+
+def decrease_quantity(request, shoe_id):
+    shoe = get_object_or_404(Shoe, id=shoe_id)
+    if shoe.quantity > 0:  # prevent negative stock
+        shoe.quantity -= 1
+        shoe.save()
+    return redirect('cart')
