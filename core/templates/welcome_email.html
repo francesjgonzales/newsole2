@@ -1,0 +1,17 @@
+<!-- templates/signup.html -->
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container mt-5 text-start">
+    <h2>Hello {{ user.username }} 👋</h2>
+    <p>Welcome to <strong>New Sole</strong> — we’re excited to have you onboard!</p>
+
+    <p>
+        <a class="btn">Visit your dashboard</a>
+    </p>
+
+    <p class="footer">
+        If you didn't sign up for this account, please ignore this email.
+    </p>
+</div>
+{% endblock %}

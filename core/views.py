@@ -1,10 +1,15 @@
 from django.shortcuts import render, redirect, get_object_or_404
 
 from core.forms import ContactForm
-from django.shortcuts import redirect
 from django.urls import reverse
-from django.contrib import messages
 from django.views.decorators.csrf import csrf_protect
+from django.core.mail import send_mail
+from django.conf import settings
+from django.contrib.auth.models import User
+from django.contrib import messages
+from django.contrib.auth.forms import UserCreationForm
+from .utils import send_welcome_email
+
 
 from .models import Shoe
 
@@ -100,8 +105,6 @@ def contact_form(request):
         return render(request, 'contact.html', {'form': form})
 
 
-
-
 # Shoe Inventory
 def increase_quantity(request, shoe_id):
     shoe = get_object_or_404(Shoe, id=shoe_id)
@@ -119,3 +122,26 @@ def decrease_quantity(request, shoe_id):
         shoe.quantity -= 1
         shoe.save()
     return redirect('cart')
+
+# Basic user sign-up
+@csrf_protect
+def signup(request):
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            send_welcome_email(user)
+
+            # Send welcome email
+            send_mail(
+                subject="Welcome to Our Site!",
+                message="Hi {},\n\nThanks for signing up! We're excited to have you onboard.".format(user.username),
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                recipient_list=[user.email],
+                fail_silently=False,
+            )
+            messages.success(request, "Your account has been created! Check your email for a welcome message.")
+            return redirect('login')
+    else:
+        form = UserCreationForm()
+    return render(request, 'signup.html', {'form': form})

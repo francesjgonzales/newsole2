@@ -177,3 +177,10 @@ if DEBUG:
 
 # Whitenoise settings for serving static files in production    
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+
+# Login
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
+
+

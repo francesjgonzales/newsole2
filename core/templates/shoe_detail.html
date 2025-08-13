@@ -6,26 +6,31 @@ Worldwide shipping.{% endblock %}
 
 
 {% block content %}
-<div class="container">
+
+<div class="container mt-5 text-start">
     {% include 'breadcrumbs.html' %}
-    <h1>This is a product detail page </h1>
+    <div class="container">
 
-    <div class="shoe-detail">
-        <h2>{{ shoe.name }}</h2>
-        <img src="{{ shoe.image.url }}" alt="{{ shoe.name }}">
-        <p>{{ shoe.description }}</p>
-        <p>Price: ${{ shoe.price }}</p>
-        <p>Description: {{ shoe.description }}</p>
-        <p>Product Code: {{ shoe.product_code }}</p>
-        <p>Quantity: {{ shoe.quantity }}</p>
-        <p>Categories:
-            {% for category in shoe.categories %}
-            <span class="badge bg-info">{{ category }}</span>
-            {% endfor %}
-            <a href="{% url 'add_cart' shoe.id %}">Add to Cart</a>
+        <h1> {{ title }} </h1>
+        <div class="row">
 
+            <div class="shoe-detail">
+                <h2>{{ shoe.name }}</h2>
+                <img src="{{ shoe.image.url }}" alt="{{ shoe.name }}">
+                <p>{{ shoe.description }}</p>
+                <p>Price: ${{ shoe.price }}</p>
+                <p>Description: {{ shoe.description }}</p>
+                <p>Product Code: {{ shoe.product_code }}</p>
+                <p>Quantity: {{ shoe.quantity }}</p>
+                <p>Categories:
+                    {% for category in shoe.categories %}
+                    <span class="badge bg-info">{{ category }}</span>
+                    {% endfor %}
+                    <a href="{% url 'add_cart' shoe.id %}">Add to Cart</a>
 
+            </div>
 
+        </div>
     </div>
 
 </div>
