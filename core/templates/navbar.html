@@ -19,10 +19,12 @@
                         <a class="nav-link" href="{% url 'shoe_list' %}">Shoes</a>
                     </li>
                     {% if cart_total_qty == 0 %}
+                    {% if not request.user.is_authenticated %}
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'view_cart' %}">Cart
                             <span class="badge bg-secondary"></span>
                         </a>
+                        {% endif %}
                         {% else %}
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'view_cart' %}">Cart
@@ -33,8 +35,6 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'contact_form' %}">Contact</a>
                     </li>
-
-
                     <li><a href="{% url 'view_wishlist' %}">Wishlist
                             <span class="badge bg-secondary">{{ wishlist_items|length }}</span>
                         </a></li>

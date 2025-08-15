@@ -62,3 +62,14 @@ class Wishlist(models.Model):
 
     def __str__(self):
         return f"{self.user.username} - {self.shoe.name}"
+
+class Cart(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    shoe = models.ForeignKey(Shoe, on_delete=models.CASCADE)
+    date_added = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('user', 'shoe')  # Prevent duplicates
+
+    def __str__(self):
+        return f"{self.user.username} - {self.shoe.name}"

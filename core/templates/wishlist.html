@@ -22,11 +22,8 @@
         <p>${{ item.shoe.price }}</p>
     </div>
     <div>
-        <form method="post" action="{% url 'remove_from_wishlist' item.shoe.id %}">
-            {% csrf_token %}
-            <button type="submit">Remove from Wishlist</button>
-        </form>
 
+        <a href="{% url 'remove_from_wishlist' item.shoe.id %}">Remove</a>
 
     </div>
     {% empty %}

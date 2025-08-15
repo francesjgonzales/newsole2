@@ -13,29 +13,33 @@ Worldwide shipping.{% endblock %}
 
         <h1> {{ title }} </h1>
         <div class="row">
-
-            <div class="shoe-detail">
-                <h2>{{ shoe.name }}</h2>
-                <img src="{{ shoe.image.url }}" alt="{{ shoe.name }}">
-                <p>{{ shoe.description }}</p>
-                <p>Price: ${{ shoe.price }}</p>
-                <p>Description: {{ shoe.description }}</p>
-                <p>Product Code: {{ shoe.product_code }}</p>
-                <p>Quantity: {{ shoe.quantity }}</p>
-                <p>Categories:
-                    {% for category in shoe.categories %}
-                    <span class="badge bg-info">{{ category }}</span>
-                    {% endfor %}
-                    <a href="{% url 'add_cart' shoe.id %}">Add to Cart</a>
-                    <!-- shoe_detail.html -->
+            <div class="col">
+                <img src="{{ shoe.image.url }}" alt="{{ shoe.name }}" class="img-fluid">
+            </div>
+            <div class="col-sm-6 shoe-detail">
+                <div class="container">
+                    <h4>{{ shoe.name }}</h4>
+                    <h6> {% for category in shoe.categories %}
+                        <mark>{{ category }}</mark>
+                        {% endfor %}
+                    </h6>
+                    <p>{{ shoe.description }}</p>
+                    <p><strong>${{ shoe.price }}</strong></p>
+                    <p>SKU: {{ shoe.product_code }}</p>
                     {% if user.is_authenticated %}
+                    <a href="{% url 'add_cart' shoe.id %}">Add to Cart</a>
+                    <a href="{% url 'add_to_wishlist' shoe.id %}" class="btn btn-primary">Save to Wishlist</a>
+                    {% endif %}
+                    <!-- {% if user.is_authenticated %}
+                    <a href="{% url 'add_cart' shoe.id %}">Add to Cart</a>
                     <a href="{% url 'add_to_wishlist' shoe.id %}" class="btn btn-primary">Save to Wishlist</a>
                     {% else %}
+                    <a href="{% url 'login' %}?next={{ request.path }}">Login to Add to Cart</a>
                     <a href="{% url 'login' %}?next={{ request.path }}">Login to Save</a>
-                    {% endif %}
+                    {% endif %} -->
 
+                </div>
             </div>
-
         </div>
     </div>
 

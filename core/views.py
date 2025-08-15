@@ -1,17 +1,17 @@
 from django.shortcuts import render, redirect, get_object_or_404
 
-from core.forms import ContactForm
 from django.urls import reverse
-from django.views.decorators.csrf import csrf_protect
-from django.core.mail import send_mail
 from django.conf import settings
+from django.contrib import messages
+from django.views.decorators.csrf import csrf_protect
+from core.forms import ContactForm
+from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from django.contrib import messages
-from django.contrib.auth.forms import UserCreationForm
+from django.core.mail import send_mail
 from .utils import send_welcome_email
 
-from .models import Shoe, Wishlist
+from .models import Shoe, Wishlist, Cart
 
 def home(request):
     popular = Shoe.objects.filter(categories__contains='POPULAR')  # Fetch the specific shoe by ID
@@ -28,7 +28,10 @@ def shoe_detail(request, slug):
     shoe = Shoe.objects.get(slug=slug)  # Fetch the specific shoe by slug
     return render(request, 'shoe_detail.html', {"shoe": shoe})
 
+@login_required(login_url='login')
 def add_to_cart(request, shoe_id):
+    shoe = get_object_or_404(Shoe, id=shoe_id)
+    cart_item, created = Cart.objects.get_or_create(user=request.user, shoe=shoe)
     cart = request.session.get('cart', {})
 
     # Convert key to string for session storage
@@ -45,10 +48,36 @@ def add_to_cart(request, shoe_id):
 
     return redirect('view_cart')  # redirect instead of rendering
 
+def remove_from_wishlist(request, shoe_id):
+    shoe = get_object_or_404(Shoe, id=shoe_id)
+    wishlist_item = Wishlist.objects.filter(user=request.user, shoe=shoe).first()
+
+    if wishlist_item:
+        wishlist_item.delete()
+        messages.success(request, f"{shoe.name} has been removed from your wishlist.")
+    else:
+        messages.error(request, "Item not found in your wishlist.")
+
+    return redirect('view_wishlist')
 
 def remove_from_cart(request, shoe_id):
-    cart = request.session.get('cart', {})
+    shoe = get_object_or_404(Shoe, id=shoe_id)
+    cart_item = Cart.objects.filter(user=request.user, shoe=shoe).first()
+
+    if cart_item:
+        cart_item.delete()
+        messages.success(request, f"{shoe.name} has been removed from your cart.")
+    else:
+        messages.error(request, "Item not found in your cart.")
+
+    # Update session cart
+    # Ensure the cart is a dictionary
+    if 'cart' not in request.session:
+        request.session['cart'] = {}
+    
+    # Convert shoe_id to string for session storage
     shoe_id_str = str(shoe_id)
+    cart = request.session['cart']
 
     if shoe_id_str in cart:
         if cart[shoe_id_str] > 1:
@@ -61,6 +90,7 @@ def remove_from_cart(request, shoe_id):
 
     return redirect('view_cart')
 
+@login_required(login_url='login')
 def view_cart(request):
     cart = request.session.get('cart', {})
     cart_number = True if cart else False
@@ -80,7 +110,8 @@ def view_cart(request):
         "cart_total": cart_total,
         "cart_number": cart_number
     })
-    
+
+@login_required
 def checkout(request):
     checkout = request.session.get('cart', [])
     shoes = Shoe.objects.filter(id__in=checkout)
@@ -104,7 +135,7 @@ def contact_form(request):
         form = ContactForm()
         return render(request, 'contact.html', {'form': form})
 
-@login_required
+@login_required(login_url='login')
 def add_to_wishlist(request, shoe_id):
     shoe = get_object_or_404(Shoe, id=shoe_id)
     wishlist_item, created = Wishlist.objects.get_or_create(user=request.user, shoe=shoe)
@@ -116,14 +147,11 @@ def add_to_wishlist(request, shoe_id):
 
     return redirect('shoe_list')  # Change to where you want to redirect
 
-
-# views.py
-@login_required
+@login_required(login_url='login')
 def view_wishlist(request):
     items = Wishlist.objects.filter(user=request.user)
     return render(request, 'wishlist.html', {'items': items})
 
-# views.py
 def remove_from_wishlist(request, shoe_id):
     shoe = get_object_or_404(Shoe, id=shoe_id)
     wishlist_item = Wishlist.objects.filter(user=request.user, shoe=shoe).first()
@@ -135,25 +163,6 @@ def remove_from_wishlist(request, shoe_id):
         messages.error(request, "Item not found in your wishlist.")
 
     return redirect('view_wishlist')
-
-
-# Shoe Inventory
-def increase_quantity(request, shoe_id):
-    shoe = get_object_or_404(Shoe, id=shoe_id)
-    shoes = Shoe.objects.all()
-    shoe.quantity += 1
-    for shoe in shoes:
-        shoe.total_price = shoe.price * shoe.quantity
-    shoe.save()
-    return render(request, 'cart.html', {'shoes': shoes})
-
-
-def decrease_quantity(request, shoe_id):
-    shoe = get_object_or_404(Shoe, id=shoe_id)
-    if shoe.quantity > 0:  # prevent negative stock
-        shoe.quantity -= 1
-        shoe.save()
-    return redirect('cart')
 
 # Basic user sign-up
 @csrf_protect
