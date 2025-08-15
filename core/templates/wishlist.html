@@ -1,0 +1,37 @@
+<!-- wishlist.html -->
+<!-- templates/home.html -->
+{% extends "base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container">
+
+    {% include 'breadcrumbs.html' %}
+    <h1>Wishlist</h1>
+
+    {% if user.is_authenticated %}
+    <p>Welcome, {{ user.username }}! Here are your saved items:</p>
+    {% else %}
+    <p>Please <a href="{% url 'login' %}?next={{ request.path }}">log in</a> to view your wishlist.</p>
+    {% endif %}
+    <h2>My Wishlist</h2>
+    {% for item in wishlist_items %}
+    <div>
+        <h3>{{ item.shoe.name }}</h3>
+        <p>${{ item.shoe.price }}</p>
+    </div>
+    <div>
+        <form method="post" action="{% url 'remove_from_wishlist' item.shoe.id %}">
+            {% csrf_token %}
+            <button type="submit">Remove from Wishlist</button>
+        </form>
+
+
+    </div>
+    {% empty %}
+    <p>Your wishlist is empty.</p>
+    {% endfor %}
+</div>
+
+{% endblock %}

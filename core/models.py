@@ -4,6 +4,8 @@ from django.db import models
 from cloudinary.models import CloudinaryField
 from multiselectfield import MultiSelectField
 from django.utils.text import slugify
+from django.contrib.auth.models import User
+
 
 # Create your models here.
 CATEGORY_CHOICES = ( ('POPULAR', 'Popular Brands'),
@@ -50,10 +52,13 @@ class ContactForm(models.Model):
     def __str__(self):
         return self.name
 
-class Cart(models.Model):
-    name = models.CharField(max_length=100)
-    quantity = models.DecimalField(blank=True, max_digits=2, decimal_places=0, default=0)
-    price = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+class Wishlist(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    shoe = models.ForeignKey(Shoe, on_delete=models.CASCADE)
+    date_added = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('user', 'shoe')  # Prevent duplicates
 
     def __str__(self):
-        return self.price * self.quantity
+        return f"{self.user.username} - {self.shoe.name}"

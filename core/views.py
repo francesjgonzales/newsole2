@@ -6,12 +6,12 @@ from django.views.decorators.csrf import csrf_protect
 from django.core.mail import send_mail
 from django.conf import settings
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
 from .utils import send_welcome_email
 
-
-from .models import Shoe
+from .models import Shoe, Wishlist
 
 def home(request):
     popular = Shoe.objects.filter(categories__contains='POPULAR')  # Fetch the specific shoe by ID
@@ -103,6 +103,38 @@ def contact_form(request):
     else:
         form = ContactForm()
         return render(request, 'contact.html', {'form': form})
+
+@login_required
+def add_to_wishlist(request, shoe_id):
+    shoe = get_object_or_404(Shoe, id=shoe_id)
+    wishlist_item, created = Wishlist.objects.get_or_create(user=request.user, shoe=shoe)
+
+    if created:
+        messages.success(request, f"{shoe.name} has been added to your wishlist!")
+    else:
+        messages.info(request, f"{shoe.name} is already in your wishlist.")
+
+    return redirect('shoe_list')  # Change to where you want to redirect
+
+
+# views.py
+@login_required
+def view_wishlist(request):
+    items = Wishlist.objects.filter(user=request.user)
+    return render(request, 'wishlist.html', {'items': items})
+
+# views.py
+def remove_from_wishlist(request, shoe_id):
+    shoe = get_object_or_404(Shoe, id=shoe_id)
+    wishlist_item = Wishlist.objects.filter(user=request.user, shoe=shoe).first()
+
+    if wishlist_item:
+        wishlist_item.delete()
+        messages.success(request, f"{shoe.name} has been removed from your wishlist.")
+    else:
+        messages.error(request, "Item not found in your wishlist.")
+
+    return redirect('view_wishlist')
 
 
 # Shoe Inventory

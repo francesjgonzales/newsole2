@@ -27,6 +27,11 @@
                         <!-- <a type="submit" href="{% url 'add_cart' shoe.id %}">Add to Cart</a> -->
                     </div>
                 </div>
+                <div>
+                    <h3>{{ shoe.name }}</h3>
+                    <p>${{ shoe.price }}</p>
+                    <a href="{% url 'add_to_wishlist' shoe.id %}">Add to Wishlist</a>
+                </div>
 
             </a>
             {% endfor %}
