@@ -32,7 +32,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DEBUG", "False") == "True"
-ALLOWED_HOSTS = ['newsole2.onrender.com', 'localhost']
+ALLOWED_HOSTS = ['newsole2.onrender.com', 'localhost', '127.0.0.1']
 
 
 # Application definition
