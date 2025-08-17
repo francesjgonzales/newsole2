@@ -35,9 +35,11 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'contact_form' %}">Contact</a>
                     </li>
-                    <li><a href="{% url 'view_wishlist' %}">Wishlist
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'view_wishlist' %}">Wishlist
                             <span class="badge bg-secondary">{{ wishlist_items|length }}</span>
-                        </a></li>
+                        </a>
+                    </li>
                     {% if request.user.is_authenticated %}
                     <span class="my-1">{{request.user}}</span>
                     <li class="nav-item">

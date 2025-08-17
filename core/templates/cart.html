@@ -27,6 +27,8 @@
             <td>{{ shoe.cart_quantity }}</td>
             <td>{{ shoe.line_total }}</td>
             <td>
+                <a href="{% url 'shoe_detail' shoe.slug %}">View Details</a>
+                <a href="{% url 'move_cart_to_wishlist' shoe.id %}">Move to Wishlist</a>
                 <a href="{% url 'add_cart' shoe.id %}">+</a>
                 <a href="{% url 'remove_from_cart' shoe.id %}">-</a>
             </td>
@@ -41,52 +43,5 @@
 
 </div>
 
-<!-- <div class="container">
-    {% for shoe in shoes %}
-    <table>
-        <tr>
-            <td>{{ shoe.name }}</td>
-            <td>{{ shoe.cart_quantity }}</td> <br>
-            <td>${{ shoe.price }}</td>
-            <td>${{ shoe.price|floatformat:2|add:0.0|floatformat:2 }}</td>
-            <td>cart total: ${{ cart_total }}</td>
-        </tr>
-
-    </table>
-    {% endfor %}
-
-</div>
-
-
-<div class="container">
-    <div class="container">
-        <h1>Shoe Inventory</h1>
-        <table cellpadding="5">
-            <tr>
-                <th>Name</th>
-                <th>Quantity</th>
-                <th>Action</th>
-            </tr>
-            {% for shoe in shoes %}
-            <tr>
-                <td>{{ shoe.name }}</td>
-                <td>{{ shoe.price }}</td>
-                <td>{{ shoe.quantity }}</td>
-                <td>
-                    <form action="{% url 'increase_quantity' shoe.id %}" method="post">
-                        {% csrf_token %}
-                        <button type="submit">+</button>
-                    </form>
-                    <form action="{% url 'decrease_quantity' shoe.id %}" method="post" style="display:inline;">
-                        {% csrf_token %}
-                        <button type="submit">-</button>
-                    </form>
-                </td>
-            </tr>
-            {% endfor %}
-        </table>
-    </div>
-</div>
- -->
 
 {% endblock %}

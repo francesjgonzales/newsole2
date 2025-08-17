@@ -22,7 +22,8 @@
         <p>${{ item.shoe.price }}</p>
     </div>
     <div>
-
+        <a href="{% url 'move_wishlist_to_cart' item.shoe.id %}">Move to Cart</a>
+        <a href="{% url 'shoe_detail' item.shoe.slug %}">View Details</a>
         <a href="{% url 'remove_from_wishlist' item.shoe.id %}">Remove</a>
 
     </div>
