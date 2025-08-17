@@ -77,6 +77,13 @@ python manage.py migrate
 
 # Run the development server
 python manage.py runserver
+
+# Update a package
+open requirements.txt and add the package name
+pip install -r requirements.txt
+
+# Overwrite requirements.txt with exact version of installed packages
+pip freeze > requirements.txt
 ```
 
 ## File Structure
