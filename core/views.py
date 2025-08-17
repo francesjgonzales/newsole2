@@ -139,6 +139,36 @@ def remove_from_cart(request, shoe_id):
 
     return redirect('view_cart')
 
+
+
+def remove_all_from_cart(request, shoe_id):
+    shoe = get_object_or_404(Shoe, id=shoe_id)
+    cart_item = Cart.objects.filter(user=request.user, shoe=shoe).first()
+
+    if cart_item:
+        cart_item.delete()
+        messages.success(request, f"{shoe.name} has been removed from your wishlist.")
+    else:
+        messages.error(request, "Item not found in your wishlist.")
+
+    # Update session cart
+    # Ensure the cart is a dictionary
+    if 'cart' not in request.session:
+        request.session['cart'] = {}
+    
+    # Convert shoe_id to string for session storage
+    shoe_id_str = str(shoe_id)
+    cart = request.session['cart']
+
+    if shoe_id_str in cart:
+        del cart[shoe_id_str]  # remove completely if quantity is 1
+
+    request.session['cart'] = cart
+    request.session.modified = True
+
+    return redirect('view_cart')
+
+
 @login_required
 def checkout(request):
     checkout = request.session.get('cart', [])

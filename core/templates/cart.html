@@ -31,6 +31,7 @@
                 <a href="{% url 'move_cart_to_wishlist' shoe.id %}">Move to Wishlist</a>
                 <a href="{% url 'add_cart' shoe.id %}">+</a>
                 <a href="{% url 'remove_from_cart' shoe.id %}">-</a>
+                <a href="{% url 'remove_all_from_cart' shoe.id %}">Delete</a>
             </td>
         </tr>
         {% endfor %}
