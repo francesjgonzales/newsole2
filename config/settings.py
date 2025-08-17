@@ -11,8 +11,9 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 import os
-from pathlib import Path
 import cloudinary
+import dj_database_url
+from pathlib import Path
 
 from dotenv import load_dotenv
 
@@ -31,7 +32,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DEBUG", "False") == "True"
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ['newsole2.onrender.com', 'localhost']
 
 
 # Application definition
@@ -116,16 +117,18 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'mydb',
-        'USER': 'newsoleadmin',
-        'PASSWORD': os.getenv("DB_PASSWORD"),
-        'HOST': 'localhost',
-        'PORT': '5432',
-    }
-}
+# DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.sqlite3',
+#        'NAME': 'mydb',
+#        'USER': 'newsoleadmin',
+#        'PASSWORD': os.environ.get("DB_PASSWORD"),
+#        'HOST': 'localhost',
+#        'PORT': '5432',
+#    }
+# }
+
+DATABASES = {'default': dj_database_url.parse(os.environ["DATABASE_URL"])}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
