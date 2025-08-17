@@ -121,7 +121,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': 'mydb',
         'USER': 'newsoleadmin',
-        'PASSWORD': 'focus1234',
+        'PASSWORD': os.getenv("DB_PASSWORD"),
         'HOST': 'localhost',
         'PORT': '5432',
     }
