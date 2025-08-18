@@ -117,19 +117,20 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-# DATABASES = {
-#    'default': {
-#        'ENGINE': 'django.db.backends.sqlite3',
-#        'NAME': 'mydb',
-#        'USER': 'newsoleadmin',
-#        'PASSWORD': os.environ.get("DB_PASSWORD"),
-#        'HOST': 'localhost',
-#        'PORT': '5432',
-#    }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'newsole_db',
+        'USER': 'newsole_db_user',
+        'PASSWORD': os.environ.get("DB_PASSWORD"),
+        'HOST': os.environ.get('DB_HOST', 'localhost'),
+        'PORT': '5432',
+    }
+ }
 
-DATABASES = {'default': dj_database_url.parse(os.environ["DATABASE_URL"])}
-
+DATABASES = {
+    'default': dj_database_url.config(default=os.environ.get('DATABASE_URL'))
+}
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
