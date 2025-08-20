@@ -92,7 +92,7 @@ python manage.py createsuperuser
 
 ## File Structure
 
-my_django_app/
+. my_django_app/
 ├── accounts/ # User authentication app
 │ │ └─── migrations/
 │ │ └─── **init**.py
