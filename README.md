@@ -93,51 +93,66 @@ python manage.py createsuperuser
 ## File Structure
 
 ```
-. my_django_app/
+my_django_app/
 ├── accounts/ # User authentication app
-│ │ ├── migrations/
-│ │ ├── **init**.py
-│ │ ├──  admin.py
-│ │ ├── apps.py
-│ │ ├── models.py
-│ │ ├── tests.py
-│ │ └─── views.py
+│   ├──  migrations/
+│   ├──  **init**.py
+│   ├──  admin.py
+│   ├──  apps.py
+│   ├──  models.py
+│   ├──  tests.py
+│   └─── views.py
 ├── core/ # Main business logic app
-│ ├── management/
-│ ├── commands/
-│ │ ├── **init**.py
-│ │ └── seed_shoes.py # for seed content
-├── shoe_data.py # 20 shoes here
-│ ├── migrations/
-│ ├── templates/
-│ │ └── home.html
-│ │ └── about.html
-│ │ └── contact.html
-│ │ └── base.html
-│ ├── filters.py
-│ ├── **init**.py
-│ ├── admin.py
-│ ├── apps.py
-│ ├── models.py
-│ ├── tests.py
-│ ├── urls.py
-│ └── views.py
-├── config/ # Django settings package
-│ ├── **init**.py
-│ ├── asgi.py
-│ ├── settings.py
-│ ├── urls.py
-│ └── wsgi.py
-├── media/ # Uploaded media (Cloudinary in production)
-├── staticfiles/ # Collected static files
+│   ├──  **pycache**.py
+│   ├──  management/
+│        ├── **pycache**.py
+│        ├── **init**.py
+│        └─── seed_shoes.py # for seed content
+│   ├──  migrations/
+│   ├──  templates/
+│        ├── about.html
+│        ├── add_to_cart.html
+│        ├── base.html # container
+│        ├── breadcrumbs.html
+│        ├── cart.html
+│        ├── checkout.html
+│        ├── contact.html
+│        ├── footer.html
+│        ├── header.html
+│        ├── home.html
+│        ├── login.html
+│        ├── messages.html
+│        ├── navbar.html
+│        ├── shoe_detail.html # product detail page
+│        ├── shoe_list.html # product listing page
+│        ├── signup.html
+│        ├── welcome_email.html
+│        ├── wishlist.html
+│        └─── **init**.py
+│   ├── **init**.py
+│   ├── admin.py
+│   ├── apps.py
+│   ├── context.py
+│   ├── filters.py
+│   ├── forms.py
+│   ├── models.py
+│   ├── shoe_data.py # 20 shoes here
+│   ├── test.py
+│   ├── urls.py
+│   ├── utils.py
+│   ├── views.py
+├── staticfiles
+├── .env
 ├── .gitignore
+├── db.sqlite3
 ├── manage.py
+├── mydb
 ├── Pipfile
 ├── Pipfile.lock
 ├── Procfile
 ├── README.md
-├── requirements.txt
-└── runtime.txt
+└─── requirements.txt
+
 ```
 
 ## Uses sqlite as database for local building
