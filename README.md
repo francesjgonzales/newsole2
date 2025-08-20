@@ -84,23 +84,34 @@ pip install -r requirements.txt
 
 # Overwrite requirements.txt with exact version of installed packages
 pip freeze > requirements.txt
+
+# Create superuser
+python manage.py createsuperuser
+
 ```
 
 ## File Structure
 
+tailwindPostCss
+├─── assets
+│ └─── img
+└─── blog
+
 my_django_app/
 ├── accounts/ # User authentication app
-│ ├── migrations/
-│ ├── templates/
-│ │ └── registration/
-│ ├── **init**.py
-│ ├── admin.py
-│ ├── apps.py
-│ ├── forms.py
-│ ├── models.py
-│ ├── tests.py
-│ └── views.py
+│ └─── migrations/
+│ └─── **init**.py
+│ └─── admin.py
+│ └─── apps.py
+│ └─── models.py
+│ └─── tests.py
+│ └─── views.py
 ├── core/ # Main business logic app
+│ ├── management/
+│ ├── commands/
+│ │ ├── **init**.py
+│ │ └── seed_shoes.py # for seed content
+├── shoe_data.py # 20 shoes here
 │ ├── migrations/
 │ ├── templates/
 │ │ └── home.html
