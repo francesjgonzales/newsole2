@@ -92,15 +92,16 @@ python manage.py createsuperuser
 
 ## File Structure
 
+```
 . my_django_app/
 ├── accounts/ # User authentication app
-│ │ └─── migrations/
-│ │ └─── **init**.py
-│ │ └─── admin.py
-│ └─── apps.py
-│ └─── models.py
-│ └─── tests.py
-│ └─── views.py
+│ │ ├── migrations/
+│ │ ├── **init**.py
+│ │ ├──  admin.py
+│ │ ├── apps.py
+│ │ ├── models.py
+│ │ ├── tests.py
+│ │ └─── views.py
 ├── core/ # Main business logic app
 │ ├── management/
 │ ├── commands/
@@ -137,6 +138,7 @@ python manage.py createsuperuser
 ├── README.md
 ├── requirements.txt
 └── runtime.txt
+```
 
 ## Uses sqlite as database for local building
 
