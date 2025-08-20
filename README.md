@@ -92,16 +92,11 @@ python manage.py createsuperuser
 
 ## File Structure
 
-tailwindPostCss
-├─── assets
-│ └─── img
-└─── blog
-
 my_django_app/
 ├── accounts/ # User authentication app
-│ └─── migrations/
-│ └─── **init**.py
-│ └─── admin.py
+│ │ └─── migrations/
+│ │ └─── **init**.py
+│ │ └─── admin.py
 │ └─── apps.py
 │ └─── models.py
 │ └─── tests.py
