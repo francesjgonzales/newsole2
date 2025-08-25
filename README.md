@@ -92,7 +92,7 @@ python manage.py createsuperuser
 
 ## File Structure
 
-```
+```bash
 my_django_app/
 ├── accounts/ # User authentication app
 │   ├──  migrations/
@@ -105,30 +105,30 @@ my_django_app/
 ├── core/ # Main business logic app
 │   ├──  **pycache**.py
 │   ├──  management/
-│        ├── **pycache**.py
-│        ├── **init**.py
-│        └─── seed_shoes.py # for seed content
+│   │    ├── **pycache**.py
+│   │    ├── **init**.py
+│   │    └─── seed_shoes.py # for seed content
 │   ├──  migrations/
 │   ├──  templates/
-│        ├── about.html
-│        ├── add_to_cart.html
-│        ├── base.html # container
-│        ├── breadcrumbs.html
-│        ├── cart.html
-│        ├── checkout.html
-│        ├── contact.html
-│        ├── footer.html
-│        ├── header.html
-│        ├── home.html
-│        ├── login.html
-│        ├── messages.html
-│        ├── navbar.html
-│        ├── shoe_detail.html # product detail page
-│        ├── shoe_list.html # product listing page
-│        ├── signup.html
-│        ├── welcome_email.html
-│        ├── wishlist.html
-│        └─── **init**.py
+│   │    ├── about.html
+│   │    ├── add_to_cart.html
+│   │    ├── base.html # container
+│   │    ├── breadcrumbs.html
+│   │    ├── cart.html
+│   │    ├── checkout.html
+│   │    ├── contact.html
+│   │    ├── footer.html
+│   │    ├── header.html
+│   │    ├── home.html
+│   │    ├── login.html
+│   │    ├── messages.html
+│   │    ├── navbar.html
+│   │    ├── shoe_detail.html # product detail page
+│   │    ├── shoe_list.html # product listing page
+│   │    ├── signup.html
+│   │    ├── welcome_email.html
+│   │    ├── wishlist.html
+│   │    └─── **init**.py
 │   ├── **init**.py
 │   ├── admin.py
 │   ├── apps.py
@@ -140,7 +140,7 @@ my_django_app/
 │   ├── test.py
 │   ├── urls.py
 │   ├── utils.py
-│   ├── views.py
+│   └─── views.py
 ├── staticfiles
 ├── .env
 ├── .gitignore
@@ -159,17 +159,24 @@ my_django_app/
 
 ## Uses Postgres for production
 
+```bash
 ## Start Postgres locally
 
 Start PostgreSQL locally (macOS)
-`brew services start postgresql`
+brew services start postgresql
 
 Access PostgrSQL shell in local terminal:
-`psql postgres`
+psql postgres
 
 Check if PostgreSQL is running
-`brew services list`
+brew services list
 
 ## Test .env variables
 
-`python manage.py shell`
+python manage.py shell
+
+```
+
+## User Authentication
+
+https://docs.allauth.org/en/latest/account/configuration.html

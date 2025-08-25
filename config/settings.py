@@ -15,6 +15,7 @@ import cloudinary
 import dj_database_url
 from pathlib import Path
 
+from django.conf import settings
 from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -46,12 +47,14 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'crispy_forms',
     'crispy_bootstrap5',
-    'debug_toolbar',
     'django_filters',
     'cloudinary_storage',
     'cloudinary',
     'multiselectfield',
-    'core',  # Your core app
+    'core',  
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
 ]
 
 # Crispy Forms settings
@@ -85,34 +88,44 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    "allauth.account.middleware.AccountMiddleware",  # Add the account middleware
 ]
 
-ROOT_URLCONF = 'config.urls'
+ROOT_URLCONF = "config.urls"
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'core' / 'templates'],
+        'DIRS': [
+            BASE_DIR / 'core' / 'templates', 
+            BASE_DIR / 'core' / 'templates' / 'allauth',
+            ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
-                'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'core.context.cart_total_qty',  # Custom context processor
-                'core.context.user_context',  # Custom context processor
-                'core.context.wishlist_items',  # Custom context processor
+                'core.context.cart_total_qty', 
+                'core.context.user_context',  
+                'core.context.wishlist_items',
             ],
         },
     },
 ]
 
-
-
 WSGI_APPLICATION = 'config.wsgi.application'
 
+# Authentication Backends
+AUTHENTICATION_BACKENDS = [
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by email
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+SITE_ID = 1
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
@@ -179,10 +192,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 # Debug Toolbar settings
-INTERNAL_IPS = ['127.0.0.1']
+# INTERNAL_IPS = ['127.0.0.1']
 
-if DEBUG:
-    MIDDLEWARE += ['debug_toolbar.middleware.DebugToolbarMiddleware']
+# if DEBUG:
+#    MIDDLEWARE += ['debug_toolbar.middleware.DebugToolbarMiddleware']
 
 
 # Whitenoise settings for serving static files in production    
@@ -195,5 +208,26 @@ LOGOUT_REDIRECT_URL = '/'
 
 
 # Send_mail test - For development only
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-DEFAULT_FROM_EMAIL = 'noreply@example.com'
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# DEFAULT_FROM_EMAIL = 'noreply@example.com'
+
+# Send_mail settings for production
+TEST_EMAIL = os.environ.get("TEST_EMAIL")
+if TEST_EMAIL == "1":
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+else:
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    EMAIL_USE_TLS = True
+    EMAIL_PORT = 587
+    EMAIL_HOST = "smtp.gmail.com"
+    EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASS")
+    EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER")
+    DEFAULT_FROM_EMAIL = os.environ.get("EMAIL_HOST_USER")
+
+# User Authentication Settings
+settings.ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
+settings.ACCOUNT_SIGNUP_FIELDS = True
+ACCOUNT_EMAIL_VERIFICATION = ["email", "optional", "mandatory"][1]
+ACCOUNT_USERNAME_MIN_LENGTH = 4
+LOGIN_URL = "/accounts/login/"
+LOGIN_REDIRECT_URL = "/success"

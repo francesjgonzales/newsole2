@@ -264,6 +264,7 @@ def contact_form(request):
             return redirect(reverse('home'))
         else:
             # Return the form with errors and user input preserved
+            messages.warning(request, "Please correct the errors below.")
             return render(request, 'contact.html', {'form': form})
     else:
         form = ContactForm()
