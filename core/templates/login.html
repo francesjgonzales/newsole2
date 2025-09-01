@@ -5,7 +5,6 @@
 <div class="container mt-5 text-start">
     <h1>Login</h1>
     <form action="" method="POST">
-
         <div class="container">
             {% if messages %}
             {% for message in messages %} <p>{{ message }}</p>
@@ -14,10 +13,7 @@
         </div>
         {% csrf_token %}
         {{ form.as_p }}
+        <button>Submit</button>
     </form>
-</div>
 
-
-
-
-{% endblock %}
+    {% endblock %}

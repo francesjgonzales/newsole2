@@ -6,8 +6,10 @@
     <h1>Sign up</h1>
     <form action="" method="POST">
         {% csrf_token %}
-        {{ form.as_p }}
+        {{ signupform.as_p }}
         <button type="submit">Sign up</button>
     </form>
+
 </div>
+
 {% endblock %}

@@ -16,11 +16,10 @@ urlpatterns = [
     path('cart/remove-all/<int:shoe_id>/', views.remove_all_from_cart, name='remove_all_from_cart'),
     path('cart/move-to-wishlist/<int:shoe_id>/', views.move_cart_to_wishlist, name='move_cart_to_wishlist'),
 
-    
     path('checkout/', views.checkout, name='checkout'),
 
     path('success/', views.home, name='home'),
-    path('signup/', views.signup, name='signup'),
+    path('accounts/signup/', views.signup, name='signup'),
     path('login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
 
@@ -28,11 +27,4 @@ urlpatterns = [
     path('wishlist/remove/<int:shoe_id>/', views.remove_from_wishlist, name='remove_from_wishlist'),
     path('wishlist/', views.view_wishlist, name='view_wishlist'),
     path('wishlist/move-to-cart/<int:shoe_id>/', views.move_wishlist_to_cart, name='move_wishlist_to_cart'),
-    
-
-
-    path('password_reset/', auth_views.PasswordResetView.as_view(template_name='password_reset.html'), name='password_reset'),
-    path('password_reset/done/', auth_views.PasswordResetDoneView.as_view(template_name='password_reset_done.html'), name='password_reset_done'),
-    path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(template_name='password_reset_confirm.html'), name='password_reset_confirm'),
-    path('reset/done/', auth_views.PasswordResetCompleteView.as_view(template_name='password_reset_complete.html'), name='password_reset_complete'),
 ]

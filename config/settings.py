@@ -80,6 +80,7 @@ cloudinary.config(
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 MIDDLEWARE = [
+    'allauth.account.middleware.AccountMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -88,7 +89,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
-    "allauth.account.middleware.AccountMiddleware",  # Add the account middleware
 ]
 
 ROOT_URLCONF = "config.urls"
@@ -115,17 +115,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'config.wsgi.application'
-
-# Authentication Backends
-AUTHENTICATION_BACKENDS = [
-    # Needed to login by username in Django admin, regardless of `allauth`
-    'django.contrib.auth.backends.ModelBackend',
-
-    # `allauth` specific authentication methods, such as login by email
-    'allauth.account.auth_backends.AuthenticationBackend',
-]
-
-SITE_ID = 1
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
@@ -201,33 +190,50 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Whitenoise settings for serving static files in production    
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-
-# Login
-LOGIN_REDIRECT_URL = '/'
-LOGOUT_REDIRECT_URL = '/'
-
-
 # Send_mail test - For development only
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # DEFAULT_FROM_EMAIL = 'noreply@example.com'
 
 # Send_mail settings for production
-TEST_EMAIL = os.environ.get("TEST_EMAIL")
-if TEST_EMAIL == "1":
-    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-else:
-    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-    EMAIL_USE_TLS = True
-    EMAIL_PORT = 587
-    EMAIL_HOST = "smtp.gmail.com"
-    EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASS")
-    EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER")
-    DEFAULT_FROM_EMAIL = os.environ.get("EMAIL_HOST_USER")
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASS")
+EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER")
+DEFAULT_FROM_EMAIL = 'newsole2'
+ACCOUNT_EMAIL_SUBJECT_PREFIX = ''
 
-# User Authentication Settings
-settings.ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
-settings.ACCOUNT_SIGNUP_FIELDS = True
-ACCOUNT_EMAIL_VERIFICATION = ["email", "optional", "mandatory"][1]
-ACCOUNT_USERNAME_MIN_LENGTH = 4
-LOGIN_URL = "/accounts/login/"
-LOGIN_REDIRECT_URL = "/success"
+SITE_ID = 1
+
+# settings.py
+# Require email verification
+ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_AUTHENTICATION_METHOD = "email"
+
+# Redirect after login
+LOGIN_REDIRECT_URL = '/'  
+LOGOUT_REDIRECT_URL = '/'
+
+# Optional: Prevent login before confirmation
+ACCOUNT_CONFIRM_EMAIL_ON_GET = True
+
+# Authentication Backends
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+# Provider specific settings
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        # For each OAuth based provider, either add a ``SocialApp``
+        # (``socialaccount`` app) containing the required client
+        # credentials, or list them here:
+        'APP': {
+            'client_id': os.environ.get("GOOGLE_CLIENT_ID"),
+            'secret': os.environ.get("GOOGLE_CLIENT_SECRET"),        
+            }
+    }
+}

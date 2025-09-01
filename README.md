@@ -57,7 +57,7 @@ A Django-based e-commerce app for selling limited edition shoes, featuring produ
 
 ---
 
-## Setup & Installation
+## Setup, Installation, & Debugging (Cheat sheet)
 
 ```bash
 # Clone the repository
@@ -87,6 +87,15 @@ pip freeze > requirements.txt
 
 # Create superuser
 python manage.py createsuperuser
+
+# Connect to psql locally
+python manage.py dbshell
+
+# Connect to Render PostgreSQL DB locally
+python "<external url found in render dashboard>"
+
+# Assuming that shoe data is already configured in management folder, run this coded to seed shoe data
+python manage.py seed_shoes
 
 ```
 

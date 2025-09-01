@@ -4,21 +4,20 @@ from django.urls import reverse
 from django.conf import settings
 from django.contrib import messages
 from django.views.decorators.csrf import csrf_protect
-from core.forms import ContactForm
+from core.forms import ContactForm, LoginForm, SignUpForm
 
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 
 from django.contrib.auth import login, authenticate
-from django.contrib.auth.forms import UserCreationForm
 from django.conf import settings
 from django.core.mail import send_mail
 from django.contrib import messages
 from .utils import send_welcome_email
 
-
 from .models import Shoe, Wishlist, Cart
+
 # Home functionality
 def home(request):
     popular = Shoe.objects.filter(categories__contains='POPULAR')  # Fetch the specific shoe by ID
@@ -230,29 +229,28 @@ def move_cart_to_wishlist(request, shoe_id):
 
     return redirect('view_wishlist')
 
+def activateEmail(request):
+    user = request.user
+    send_welcome_email(user)
+    messages.success(request, "A welcome email has been sent to your email address.")
+    return redirect('home')
+
 # User Signup
 @csrf_protect
 def signup(request):
     if request.method == "POST":
-        form = UserCreationForm(request.POST)
+        form = SignUpForm(request.POST)
         if form.is_valid():
-            user = form.save()
-            send_welcome_email(user)
-
-            # Send welcome email
-            send_mail(
-                subject="Welcome to Our Site!",
-                message="Hi {},\n\nThanks for signing up! We're excited to have you onboard.".format(user.username),
-                from_email=settings.DEFAULT_FROM_EMAIL,
-                recipient_list=[user.email],
-                fail_silently=False,
-            )
-            messages.success(request, "Your account has been created! Check your email for a welcome message.")
+            user.is_active = False  # Deactivate account till it is confirmed
+            user = form.save(commit=False)
+            user.save()
+            activateEmail(request, user, form.cleaned_data.get("email"))  
             return redirect('login')
     else:
-        form = UserCreationForm()
-    return render(request, 'signup.html', {'form': form})
+        form = SignUpForm()
 
+    return render(request, 'signup.html',{'signupform': form})
+4
 # Contact Form
 @csrf_protect
 def contact_form(request):
@@ -265,7 +263,36 @@ def contact_form(request):
         else:
             # Return the form with errors and user input preserved
             messages.warning(request, "Please correct the errors below.")
-            return render(request, 'contact.html', {'form': form})
+            return render(request, 'contact.html', {'contactform': form})
     else:
         form = ContactForm()
-        return render(request, 'contact.html', {'form': form})
+        return render(request, 'contact.html', {'contactform': form})
+
+
+# Login Form
+@csrf_protect
+def login_view(request):
+    if request.method == "POST":
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            username = request.POST['username']
+            password = request.POST['password']
+            user = authenticate(request, username=username, password=password)
+            
+            if user is not None:
+                login(request, user)
+                return redirect('shoe_list')
+            else:
+                messages.error(request, "Invalid username or password.")
+                return render(request, 'login.html', {'form': form})
+        else:
+            messages.error(request, "Please correct the errors below.")
+            return render(request, 'login.html', {'form': form})
+    else:
+        form = LoginForm()
+    return render(request, 'login.html', {'form': form})
+
+def logout_view(request):
+    logout(request)
+    messages.success(request, "You have been logged out successfully.")
+    return redirect('home')

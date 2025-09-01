@@ -25,3 +25,9 @@ def wishlist_items(request):
 
 def user_context(request):
     return {'user': request.user}   
+
+def logged_in(request):
+    return {'logged_in': request.user.is_authenticated}
+
+def signedup(request):
+    return {'signedup': request.session.get('signedup', False)}
