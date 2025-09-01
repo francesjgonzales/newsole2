@@ -5,7 +5,6 @@
 {% trans "Signup" %}
 {% endblock head_title %}
 {% block content %}
-
 <div class="container mt-5 text-start">
     {% element h1 %}
     {% trans "Sign Up" %}
@@ -14,9 +13,8 @@
     <a href="{{ login_url }}">
         {% endsetvar %}
         {% setvar end_link %}
-        {% endsetvar %}
     </a>
-
+    {% endsetvar %}
     {% element p %}
     {% blocktranslate %}Already have an account? Then please {{ link }}sign in{{ end_link }}.{% endblocktranslate %}
     {% endelement %}
@@ -46,5 +44,10 @@
     {% if SOCIALACCOUNT_ENABLED %}
     {% include "socialaccount/snippets/login.html" with page_layout="entrance" %}
     {% endif %}
+    <div class="mt-4">
+        <a href="{{ password_reset_url }}">
+            {% trans "Forgot your password?" %}
+        </a>
+    </div>
 </div>
 {% endblock content %}

@@ -97,6 +97,20 @@ python "<external url found in render dashboard>"
 # Assuming that shoe data is already configured in management folder, run this coded to seed shoe data
 python manage.py seed_shoes
 
+# Start Postgres locally
+Start PostgreSQL locally (macOS)
+brew services start postgresql
+
+Access PostgrSQL shell in local terminal:
+psql postgres
+
+Check if PostgreSQL is running
+brew services list
+
+## Test .env variables
+python manage.py shell
+
+
 ```
 
 ## File Structure
@@ -168,24 +182,8 @@ my_django_app/
 
 ## Uses Postgres for production
 
-```bash
-## Start Postgres locally
-
-Start PostgreSQL locally (macOS)
-brew services start postgresql
-
-Access PostgrSQL shell in local terminal:
-psql postgres
-
-Check if PostgreSQL is running
-brew services list
-
-## Test .env variables
-
-python manage.py shell
-
-```
-
 ## User Authentication
 
+https://docs.djangoproject.com/en/5.2/ref/contrib/auth/#django.contrib.auth.models.User.first_name
 https://docs.allauth.org/en/latest/account/configuration.html
+https://docs.allauth.org/en/dev/installation/quickstart.html
