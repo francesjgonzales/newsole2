@@ -29,6 +29,6 @@ urlpatterns = [
     path('wishlist/remove/<int:shoe_id>/', views.remove_from_wishlist, name='remove_from_wishlist'),
     path('wishlist/', views.view_wishlist, name='view_wishlist'),
     path('wishlist/move-to-cart/<int:shoe_id>/', views.move_wishlist_to_cart, name='move_wishlist_to_cart'),
-    path('admin', admin.site.index, name='admin'),
+    path('admin/login/', admin.site.index, name='admin'),
 
 ]
