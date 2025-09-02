@@ -4,7 +4,7 @@ from django.urls import reverse
 from django.conf import settings
 from django.contrib import messages
 from django.views.decorators.csrf import csrf_protect
-from core.forms import ContactForm, LoginForm, SignUpForm
+from core.forms import ContactForm, LoginForm
 
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
@@ -17,6 +17,7 @@ from django.contrib import messages
 from .utils import send_welcome_email
 
 from .models import Shoe, Wishlist, Cart
+from django.db.models import Q
 
 # Home functionality
 def home(request):
@@ -34,6 +35,14 @@ def shoe_detail(request, slug):
     shoe = Shoe.objects.get(slug=slug)  # Fetch the specific shoe by slug
     return render(request, 'shoe_detail.html', {"shoe": shoe})
 
+def shoe_search(request):
+    query = request.GET.get('q')  # Get the search term from URL query params
+    if query:
+        shoes = Shoe.objects.filter(name__icontains=query)  # Case-insensitive search
+    else:
+        shoes = Shoe.objects.all()  # Show all shoes if no search query
+
+    return render(request, 'shoe_list.html', {'shoes': shoes, 'query': query})
 
 # Wishlist functionality
 @login_required(login_url='login')
