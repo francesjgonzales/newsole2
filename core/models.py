@@ -4,7 +4,7 @@ from django.db import models
 from cloudinary.models import CloudinaryField
 from multiselectfield import MultiSelectField
 from django.utils.text import slugify
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, AbstractUser
 
 
 # Create your models here.
@@ -73,3 +73,4 @@ class Cart(models.Model):
 
     def __str__(self):
         return f"{self.user.username} - {self.shoe.name}"
+    

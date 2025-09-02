@@ -209,8 +209,10 @@ SITE_ID = 1
 # settings.py
 # Require email verification
 ACCOUNT_EMAIL_VERIFICATION = "mandatory"
-ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_AUTHENTICATION_METHOD = "email"
+ACCOUNT_SIGNUP_FIELDS = ['email*', 'username*', 'password1*', 'password2*', 'phone_number', 'date_of_birth', 'address']
+settings.ACCOUNT_LOGIN_METHODS = {'email'}
+# ACCOUNT_EMAIL_REQUIRED = True
+# ACCOUNT_AUTHENTICATION_METHOD = "email"
 
 # Redirect after login
 LOGIN_REDIRECT_URL = '/'  
@@ -237,3 +239,12 @@ SOCIALACCOUNT_PROVIDERS = {
             }
     }
 }
+
+# Custom User Model 
+# Tell Django to use the custom user model
+settings.AUTH_USER_MODEL = 'accounts.CustomUser'
+# Hook the custom user model
+ACCOUNT_FORMS = {
+    'signup': 'accounts.custom_forms.CustomSignupForm',
+}# Session settings
+SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
