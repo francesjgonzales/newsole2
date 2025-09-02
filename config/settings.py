@@ -215,8 +215,8 @@ settings.ACCOUNT_LOGIN_METHODS = {'email'}
 # ACCOUNT_AUTHENTICATION_METHOD = "email"
 
 # Redirect after login
-LOGIN_REDIRECT_URL = '/'  
-LOGOUT_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = 'home'  
+LOGOUT_REDIRECT_URL = 'home'
 
 # Optional: Prevent login before confirmation
 ACCOUNT_CONFIRM_EMAIL_ON_GET = True
