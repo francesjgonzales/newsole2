@@ -24,22 +24,19 @@ from django.core.paginator import Paginator
 # Home functionality
 def home(request):
     popular = Shoe.objects.filter(categories__contains='POPULAR')  # Fetch the specific shoe by ID
-
-    shoes = Shoe.objects.all()  # Fetch all Shoe objects from the database
-
-    # Pagination can be added here if needed
-    paginator = Paginator(shoes, 5)  # Show 5 shoes per page
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
-    return render(request, 'home.html', {"shoes": popular, "page_obj": page_obj})
+  
+    return render(request, 'home.html', {"shoes": popular})
 
 def about(request):
     return render(request, 'about.html')
 
 def shoe_list(request):
     items = Shoe.objects.all()  # Fetch all Shoe objects from the database
-
-    return render(request, 'shoe_list.html', {"shoes": items})    
+  # Pagination can be added here if needed
+    paginator = Paginator(items, 5)  # Show 5 shoes per page
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    return render(request, 'shoe_list.html', {"shoes": items, 'page_obj': page_obj})    
 
 def shoe_detail(request, slug):
     shoe = Shoe.objects.get(slug=slug)  # Fetch the specific shoe by slug

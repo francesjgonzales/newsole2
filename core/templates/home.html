@@ -1,6 +1,7 @@
 <!-- templates/home.html -->
 {% extends "base.html" %}
 {% load static %}
+{% load crispy_forms_tags %}
 {% load cloudinary %}
 {% block content %}
 <div class="container">
@@ -45,7 +46,7 @@
     <h3>Popular Brands</h3>
 
     <div class="row">
-        {% for shoe in page_obj %}
+        {% for shoe in shoes %}
         <div class="col-sm-2 col-md-4 col-lg-3 mb-4">
             <div class="mb-4 product-cards">
                 <a href="{% url 'shoe_detail' shoe.slug %}">
@@ -65,19 +66,7 @@
         {% endfor %}
     </div>
 
-    <div class="pagination">
-        {% if page_obj.has_previous %}
-        <a href="?page=1">First</a>
-        <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
-        {% endif %}
 
-        <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
-
-        {% if page_obj.has_next %}
-        <a href="?page={{ page_obj.next_page_number }}">Next</a>
-        <a href="?page={{ page_obj.paginator.num_pages }}">Last</a>
-        {% endif %}
-    </div>
 
 </div>
 </div>

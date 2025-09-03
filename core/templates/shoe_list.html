@@ -15,7 +15,7 @@
 
     <div class="row">
 
-        {% for shoe in shoes %}
+        {% for shoe in page_obj %}
         <div class="col-sm-6 col-md-4 col-lg-3 mb-4">
             <a href="{% url 'shoe_detail' shoe.slug %}">
                 <div class=" mb-4 product-cards">
@@ -30,19 +30,51 @@
                         <p><small class="card-text">Produce Code: {{ shoe.product_code }}</small></p>
 
                         <a href="{% url 'add_to_wishlist' shoe.id %}"><i class="bi bi-bag-heart"></i></a>
-
                     </div>
                 </div>
             </a>
         </div>
+
         {% endfor %}
 
+
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+                {% if page_obj.has_previous %}
+                <li class="page-item"><a href="?page=1" class="page-link">First</a>
+                </li>
+
+                <li class="page-item">
+                    <a href="?page={{ page_obj.previous_page_number }}" class="page-link">Previous</a>
+                </li>
+                {% endif %}
+
+                <li class="page-item d-flex flex-row">
+                    {% for num in page_obj.paginator.page_range %}
+                    {% if page_obj.number == num %}
+                    <span class="current-page page-link">{{ num }}</span>
+                    {% else %}
+                    <span class="d-flex flex-row"><a class="page-link" href="?page={{ num }}">{{ num }}</a></span>
+                    {% endif %}
+                    {% endfor %}
+                </li>
+
+                {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a href="?page={{ page_obj.next_page_number }}" class="page-link">Next</a>
+                </li>
+                <li class="page-item">
+                    <a href="?page={{ page_obj.paginator.num_pages }}" class="page-link">Last</a>
+                </li>
+                {% endif %}
+
+            </ul>
+        </nav>
+
+        <div class="card-footer m-3">
+            <small class="text-muted">Last updated 3 mins ago</small>
+        </div>
     </div>
 
-    <div class="card-footer m-3">
-        <small class="text-muted">Last updated 3 mins ago</small>
-    </div>
-</div>
 
-
-{% endblock %}
+    {% endblock %}
