@@ -14,31 +14,46 @@ A Django-based e-commerce app for selling limited edition shoes, featuring produ
 
 ---
 
-## Features
+## 🚀 Features
 
-### 🏠 Home & Product Display
+### 🛍️ Product Management
 
-- **Home Page**: Displays a curated list of popular shoes.
-- **Shoe List Page**: Shows all available shoes.
-- **Shoe Detail Page**: Displays detailed shoe information with purchase and wishlist options.
+- Displays shoes with details: name, description, price, categories, stock status, and images.
+- Dynamic **stock availability** logic to show if a shoe is in stock.
+- Pagination for better navigation (shows 5 items at a time with a "Show More" button).
 
-### 🛒 Shopping Cart
+### 🔍 Search
 
-- **Add to Cart**: Add shoes to the shopping cart.
-- **Remove from Cart**: Remove selected shoes from the shopping cart.
-- **View Cart**: Displays all items currently in the cart.
+- Search shoes by name.
+- Displays search results on the shoe listing page.
 
-### ❤️ Wishlist
+### ❤️ Wishlist & Cart
 
-- **Add to Wishlist**: Save shoes to the wishlist for later consideration.
-- **Remove from Wishlist**: Remove shoes from the wishlist.
-- **Wishlist → Cart Transfer**: Move selected shoes from wishlist to cart.
-- **Cart → Wishlist Transfer**: Move selected shoes from cart to wishlist.
+- **Add to Wishlist:** Save favorite shoes.
+- **Move to Cart from Wishlist:** If the shoe is in stock, it moves to the cart; otherwise, it stays in the wishlist.
+- **Move to Wishlist from Cart:** Easily move items back to wishlist.
+- **Delete from Cart:** Remove items with a single click.
 
-### 📂 Data Management
+### 🔑 User Authentication
 
-- **Database Integration**: Uses Django ORM for managing shoe data.
-- **Session-Based Storage**: Cart and wishlist data stored in Django sessions.
+- **Signup, Login, Logout** powered by Django's built-in authentication and `django-allauth`.
+- Extended signup form with **first name and last name** fields.
+- Access control: Shoe list, wishlist, and cart pages are restricted to logged-in users.
+- Redirect guests to login or signup when attempting to access protected pages.
+
+### 📧 Email Automation
+
+- Sends a **welcome email** to users after successful signup.
+- Uses **Gmail SMTP** for sending emails securely.
+
+### 🗄️ Database
+
+- Integrated **PostgreSQL** for production.
+- Configured and deployed on **Render**.
+
+### 🎨 Frontend
+
+- Fully responsive design using **Bootstrap**.
 
 ### 🖼 Image Hosting
 
@@ -46,14 +61,17 @@ A Django-based e-commerce app for selling limited edition shoes, featuring produ
 
 ---
 
-## Tech Stack
+## 🛠️ Tech Stack
 
-- **Frontend**: HTML, CSS, Bootstrap
-- **Backend**: Django (Function-Based Views), Python
-- **Database**: SQLite3 (local dev) / Render (production)
-- **Media Storage**: Cloudinary
-- **Version Control**: Git & GitHub
-- **Deployment**: Render
+| Category           | Technology                    |
+| ------------------ | ----------------------------- |
+| **Framework**      | Django (Function-Based Views) |
+| **Database**       | PostgreSQL                    |
+| **Email**          | Gmail SMTP                    |
+| **Authentication** | Django Allauth                |
+| **Image Storage**  | Cloudinary                    |
+| **Deployment**     | Render                        |
+| **CSS Framework**  | Bootstrap 5                   |
 
 ---
 
@@ -177,6 +195,17 @@ my_django_app/
 └─── requirements.txt
 
 ```
+
+### Key Files
+
+| File/Folder           | Description                                    |
+| --------------------- | ---------------------------------------------- |
+| models.py             | Shoe model with stock logic                    |
+| views.py              | Business logic for cart, wishlist, search, etc |
+| templates/            | HTML templates styled with Bootstrap           |
+| context_processors.py | Shows cart item count globally                 |
+
+---
 
 ## Uses sqlite as database for local building
 
