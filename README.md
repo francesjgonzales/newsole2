@@ -216,3 +216,13 @@ my_django_app/
 https://docs.djangoproject.com/en/5.2/ref/contrib/auth/#django.contrib.auth.models.User.first_name
 https://docs.allauth.org/en/latest/account/configuration.html
 https://docs.allauth.org/en/dev/installation/quickstart.html
+
+## Credits
+
+Classmate's notes from 2020!!!
+
+Chatgpt and Gemini
+
+Youtube tutorials
+
+Nike.com and Lovebonito.com for research
