@@ -84,8 +84,11 @@ git clone https://github.com/yourusername/newsole.git
 # Navigate into the project folder
 cd newsole
 
-# Install dependencies
+# Install dependencies (assuming that there's existing packages saved in Pipfile)
 pipenv install
+
+# Install Django
+pipenv install django
 
 # Activate the virtual environment
 pipenv shell

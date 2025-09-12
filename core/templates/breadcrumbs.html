@@ -3,7 +3,7 @@
         <ol class="breadcrumb">
             {% if shoes %}
             <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
-            <li class="breadcrumb-item">Shoes</li>
+            <li class="breadcrumb-item"><a href="{% url 'shoe_list' %}">Shoes</a></li>
             {% endif %}
 
             {% if shoe.slug %}
