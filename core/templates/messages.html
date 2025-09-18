@@ -1,18 +1,11 @@
-<!-- templates/home.html -->
-{% extends "base.html" %}
 {% load static %}
 
-{% block title %}Home | My Site{% endblock %}
 
-{% block content %}
-<h1>Welcome to My Site</h1>
-<p>This is the home page content.</p>
-{% endblock %}
-
-{% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/home.css' %}">
-{% endblock %}
-
-{% block extra_js %}
-<script src="{% static 'js/home.js' %}"></script>
-{% endblock %}
+{% if messages %}
+{% for message in messages %}
+<div class="alert {{ message.tags }} alert-dismissible message-alert fade show" role="alert" id="myAlert">
+    <div>{{message}}</div>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endfor %}
+{% endif %}

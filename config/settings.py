@@ -18,6 +18,7 @@ from pathlib import Path
 from django.conf import settings
 from dotenv import load_dotenv
 
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -248,3 +249,15 @@ ACCOUNT_FORMS = {
     'signup': 'accounts.custom_forms.CustomSignupForm',
 }# Session settings
 SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
+
+
+from django.contrib.messages import constants as message_constants
+# Message tags for Bootstrap compatibility
+
+MESSAGE_TAGS = {
+    message_constants.DEBUG: 'alert-secondary',
+    message_constants.INFO: 'alert-info',
+    message_constants.SUCCESS: 'alert-success',
+    message_constants.WARNING: 'alert-warning',
+    message_constants.ERROR: 'alert-danger',
+}

@@ -11,3 +11,11 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 });
+
+
+const alert = bootstrap.Alert.getOrCreateInstance('#myAlert')
+if (alert) {
+    setTimeout(() => {
+        alert.close()
+    }, 2000);
+};

@@ -1,3 +1,4 @@
+
 from django.shortcuts import render, redirect, get_object_or_404
 
 from django.urls import reverse
@@ -40,6 +41,7 @@ def shoe_list(request):
 
 def shoe_detail(request, slug):
     shoe = Shoe.objects.get(slug=slug)  # Fetch the specific shoe by slug
+
     return render(request, 'shoe_detail.html', {"shoe": shoe})
 
 def shoe_search(request):
@@ -75,7 +77,7 @@ def remove_from_wishlist(request, shoe_id):
 
     if wishlist_item:
         wishlist_item.delete()
-        messages.success(request, f"{shoe.name} has been removed from your wishlist.")
+        messages.warning(request, f"{shoe.name} has been removed from your wishlist.")
     else:
         messages.error(request, "Item not found in your wishlist.")
 
@@ -102,6 +104,7 @@ def add_to_cart(request, shoe_id):
     request.session.modified = True # mark session as changed
 
     return redirect('view_cart')  # redirect instead of rendering
+
 
 @login_required(login_url='login')
 def view_cart(request):
