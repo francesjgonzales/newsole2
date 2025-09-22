@@ -22,6 +22,7 @@ django-crispy-forms = "*"
 whitenoise = "*"
 dj-database-url = "*"
 python-dotenv = "*"
+stripe = "*"
 
 [dev-packages]
 

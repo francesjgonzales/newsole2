@@ -50,9 +50,13 @@
         {% endfor %}
     </table>
 
-    <p><strong>Grand Total: ${{ cart_total|floatformat:2 }}</strong></p>
-    {% else %}
-    <p>Your cart is empty.</p>
+    <div class="container mt-5 text-end">
+        <p><strong>Grand Total: ${{ cart_total|floatformat:2 }}</strong></p>
+        <a class="btn btn-primary" href="{% url 'checkout' %}" type="button">Checkout</a>
+        {% else %}
+        <p>Your cart is empty.</p>
+
+    </div>
     {% endif %}
 
 </div>

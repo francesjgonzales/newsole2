@@ -23,4 +23,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
     path('', include('core.urls')),  # 👈 This line maps the root path
+    path('checkout/', include('checkout.urls')),  # 👈 This line maps the checkout path
 ]

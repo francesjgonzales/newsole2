@@ -1,0 +1,39 @@
+<!-- templates/about.html -->
+{% extends "base.html" %}
+
+{% block content %}
+
+
+<div class="container mt-5">
+    <h2>Checkoutt</h2>
+    <p>Review your selected items below before proceeding with the payment.</p>
+    <ul>
+        {% for shoe in shoes %}
+        <li>
+            <img src="{{ shoe.image.url }}" alt="{{ shoe.name }}" class="img-thumbnail shoe-image">
+            {{ shoe.name }} - ${{ shoe.price }}
+        </li>
+        <a href="{% url 'remove_from_cart' shoe.id %}">Remove</a>
+
+
+        <p><strong>Total: ${{ total_price }}</strong></p>
+
+
+
+
+        <div>
+            <p>For any inquiries, please contact us at <a href="mailto:info@newsole.com">info@newsole.com</a>.</p>
+            <p>Follow us on social media for updates and exclusive offers!</p>
+            <p>Thank you for choosing New Sole!</p>
+        </div>
+        {% endfor %}
+
+        <form action="{% url 'checkout' %}" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="productId" value={{productId}}>
+            <button type="submit">Checkout</button>
+
+        </form>
+</div>
+
+{% endblock %}

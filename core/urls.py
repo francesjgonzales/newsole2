@@ -19,7 +19,6 @@ urlpatterns = [
     path('cart/move-to-wishlist/<int:shoe_id>/', views.move_cart_to_wishlist, name='move_cart_to_wishlist'),
 
     path('checkout/', views.checkout, name='checkout'),
-
     path('success/', views.home, name='home'),
     path('accounts/signup/', views.signup, name='signup'),
     path('accounts/login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'),

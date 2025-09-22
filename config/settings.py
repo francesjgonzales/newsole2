@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 import os
 import cloudinary
-import dj_database_url
 from pathlib import Path
 
 from django.conf import settings
@@ -36,6 +35,11 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 DEBUG = os.getenv("DEBUG", "False") == "True"
 ALLOWED_HOSTS = ['newsole2.onrender.com', 'localhost', '127.0.0.1']
 
+STRIPE_PUBLISHABLE_KEY = os.environ.get('STRIPE_PUBLISHABLE_KEY')
+STRIPE_API_KEY = os.environ.get('STRIPE_SECRET_KEY')
+WEBHOOK_ENDPOINT_SECRET = ''
+
+DOMAIN = 'http://localhost:8000'
 
 # Application definition
 
@@ -53,6 +57,7 @@ INSTALLED_APPS = [
     'cloudinary',
     'multiselectfield',
     'core',  
+    'checkout',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -164,7 +169,6 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
