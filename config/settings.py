@@ -33,13 +33,20 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DEBUG", "False") == "True"
-ALLOWED_HOSTS = ['newsole2.onrender.com', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['smelly-unglib-maud.ngrok-free.dev', 'localhost', '127.0.0.1', 'newsole2.onrender.com']
 
 STRIPE_PUBLISHABLE_KEY = os.environ.get('STRIPE_PUBLISHABLE_KEY')
 STRIPE_API_KEY = os.environ.get('STRIPE_SECRET_KEY')
-WEBHOOK_ENDPOINT_SECRET = ''
+STRIPE_WEBHOOK_SECRET = os.environ.get('STRIPE_WEBHOOK_SECRET')
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://smelly-unglib-maud.ngrok-free.dev"
+]
 
 DOMAIN = 'http://localhost:8000'
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+
 
 # Application definition
 

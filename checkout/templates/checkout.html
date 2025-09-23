@@ -30,6 +30,7 @@
 
         <form action="{% url 'checkout' %}" method="post">
             {% csrf_token %}
+            {{productId}}
             <input type="hidden" name="productId" value={{productId}}>
             <button type="submit">Checkout</button>
 

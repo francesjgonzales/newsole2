@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+<h1>Let's try it again.</h1>
+<form action="{% url 'checkout' %}" method="post">
+    {% csrf_token %}
+    {{productId}}
+    <input type="hidden" name="productId" value={{productId}}>
+    <button type="submit">Checkout</button>
+
+</form>
+{% endblock %}

@@ -27,6 +27,8 @@ class Shoe(models.Model):
     slug = models.SlugField(max_length=100, unique=True, blank=True)
     product_code = models.CharField(max_length=20, unique=True, blank=True)
     quantity = models.DecimalField(blank=True, max_digits=2, decimal_places=0, default=0)
+    stripe_product_id = models.CharField(max_length=200, blank=True, null=True)
+    stripe_price_id = models.CharField(max_length=200, blank=True, null=True)
 
     def save(self, *args, **kwargs):
         if not self.product_code:
