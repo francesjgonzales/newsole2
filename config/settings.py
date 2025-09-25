@@ -43,7 +43,7 @@ CSRF_TRUSTED_ORIGINS = [
     "https://smelly-unglib-maud.ngrok-free.dev"
 ]
 
-DOMAIN = 'newsole2.onrender.com'
+DOMAIN = 'http://localhost:8000' if DEBUG else 'https://newsole2.onrender.com'
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
 

@@ -1,3 +1,4 @@
+import json
 from django.shortcuts import render
 from django.shortcuts import redirect
 from django.conf import settings
@@ -15,13 +16,21 @@ def checkout(request):
     cart = request.session.get('cart', {})
     shoes = Shoe.objects.filter(id__in=cart.keys())
     line_items = []
+    all_items = []
 
     for shoe in shoes:
         qty = cart[str(shoe.id)]
 
+        item = {
+            'price': shoe.stripe_price_id,
+            'quantity': qty,
+        }
+
         if not shoe.stripe_price_id:
             raise Exception(f"Product {shoe.name} is not available for purchase.")
-        line_items.append({
+        
+        line_items.append(item)
+        all_items.append({
             'price': shoe.stripe_price_id,
             'quantity': qty,
         })
@@ -31,15 +40,16 @@ def checkout(request):
         line_items=line_items,
         mode='payment',
         success_url=DOMAIN + '/checkout/success',
-        cancel_url=DOMAIN + '/checkout/cancel',
+        cancel_url=DOMAIN + '/cart',
     )
+    print(line_items)
     return redirect(checkout_session.url, code=303)
 
 def checkout_success(request):
-    return render(request, "success.html")
+    return render(request, "checkout_success.html")
 
 def checkout_cancel(reverse):
-    return render(reverse("cart"))
+    return render(reverse, "cart.html")
 
 
 @csrf_exempt
@@ -59,7 +69,6 @@ def stripe_webhook(request):
     if event['type'] == 'checkout.session.completed':
         session = event['data']['object']
         checkout_session_id = session['id']
-        customer_id = session['customer']
         # Locate UserPayment by checkout session id
         try:
             user_payment = UserPayment.objects.get(stripe_checkout_session_id=checkout_session_id)

@@ -25,7 +25,6 @@ from django.core.paginator import Paginator
 # Home functionality
 def home(request):
     popular = Shoe.objects.filter(categories__contains='POPULAR')  # Fetch the specific shoe by ID
-  
     return render(request, 'home.html', {"shoes": popular})
 
 def about(request):
@@ -185,16 +184,6 @@ def remove_all_from_cart(request, shoe_id):
     request.session.modified = True
 
     return redirect('view_cart')
-
-
-@login_required
-def checkout(request):
-    checkout = request.session.get('cart', [])
-    shoes = Shoe.objects.filter(id__in=checkout)
-    # total_price = sum(shoe.price for shoe in shoes)
-    total_price = sum(shoe.price for shoe in shoes) if shoes else 0.00
-    return render(request, 'checkout.html', {"shoes": shoes, "total_price": total_price})
-
 
 # Move Wishlist to Cart functionality
 @login_required(login_url='login')
