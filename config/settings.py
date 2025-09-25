@@ -40,7 +40,7 @@ STRIPE_API_KEY = os.environ.get('STRIPE_SECRET_KEY')
 STRIPE_WEBHOOK_SECRET = os.environ.get('STRIPE_WEBHOOK_SECRET')
 
 CSRF_TRUSTED_ORIGINS = [
-    "https://smelly-unglib-maud.ngrok-free.dev"
+    "https://newsole2.onrender.com/"
 ]
 
 DOMAIN = 'http://localhost:8000' if DEBUG else 'https://newsole2.onrender.com'
