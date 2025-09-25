@@ -5,7 +5,7 @@ from django.urls import reverse
 from django.conf import settings
 from django.contrib import messages
 from django.views.decorators.csrf import csrf_protect
-from core.forms import ContactForm, LoginForm
+from core.forms import ContactForm, LoginForm, SignUpForm
 
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
@@ -40,7 +40,6 @@ def shoe_list(request):
 
 def shoe_detail(request, slug):
     shoe = Shoe.objects.get(slug=slug)  # Fetch the specific shoe by slug
-
     return render(request, 'shoe_detail.html', {"shoe": shoe})
 
 def shoe_search(request):
@@ -49,8 +48,7 @@ def shoe_search(request):
         shoes = Shoe.objects.filter(name__icontains=query)  # Case-insensitive search
     else:
         shoes = Shoe.objects.all()  # Show all shoes if no search query
-
-    return render(request, 'shoe_list.html', {'shoes': shoes, 'query': query})
+    return render(request, 'search.html', {'shoes': shoes, 'query': query})
 
 # Wishlist functionality
 @login_required(login_url='login')
@@ -258,7 +256,7 @@ def signup(request):
         form = SignUpForm()
 
     return render(request, 'signup.html',{'signupform': form})
-4
+
 # Contact Form
 @csrf_protect
 def contact_form(request):

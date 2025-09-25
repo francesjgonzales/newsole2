@@ -1,0 +1,41 @@
+<!-- templates/home.html -->
+{% extends "base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="d-flex p-2 justify-content-end">
+    {% include 'messages.html' %}
+
+</div>
+<div class="container mt-5 text-start">
+    {% include 'breadcrumbs.html' %}
+
+
+    {% for shoe in shoes %}
+    <div class="col-sm-6 col-md-4 col-lg-3 mb-4">
+        <a href="{% url 'shoe_detail' shoe.slug %}">
+            <div class=" mb-4 product-cards">
+                <div class="align-items-center" style="height: 200px;">
+                    <img src="{{ shoe.image.url }}" alt="{{ shoe.name }}" class="card-img-top">
+                </div>
+                <div class="card-body">
+                    <p><small class="badge rounded-pill text-bg-info">{{ shoe.categories|join:" , " }}</small>
+                    </p>
+                    <h5 class="card-title">{{ shoe.name }}</h5>
+                    <h6 class="card-text" style="font-weight: bold;">${{ shoe.price }}</h6>
+                    <p><small class="card-text">Produce Code: {{ shoe.product_code }}</small></p>
+
+                    <a href="{% url 'add_to_wishlist' shoe.id %}"><i class="bi bi-bag-heart"></i>
+                    </a>
+                </div>
+            </div>
+        </a>
+    </div>
+    {% empty %}
+    <div>No shoes found.</div>
+    {% endfor %}
+</div>
+
+{% endblock %}
