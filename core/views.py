@@ -10,6 +10,8 @@ from core.forms import ContactForm, LoginForm, SignUpForm
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.urls import reverse_lazy
+from django.views.generic.edit import CreateView
 
 from django.contrib.auth import login, authenticate
 from django.conf import settings
@@ -20,7 +22,6 @@ from .utils import send_welcome_email
 from .models import Shoe, Wishlist, Cart
 from django.db.models import Q
 from django.core.paginator import Paginator
-
 
 # Home functionality
 def home(request):
@@ -154,8 +155,6 @@ def remove_from_cart(request, shoe_id):
 
     return redirect('view_cart')
 
-
-
 def remove_all_from_cart(request, shoe_id):
     shoe = get_object_or_404(Shoe, id=shoe_id)
     cart_item = Cart.objects.filter(user=request.user, shoe=shoe).first()
@@ -242,20 +241,21 @@ def activateEmail(request):
     return redirect('home')
 
 # User Signup
-@csrf_protect
-def signup(request):
-    if request.method == "POST":
+def SignUp(request):
+    if request.method == 'POST':
         form = SignUpForm(request.POST)
         if form.is_valid():
-            user.is_active = False  # Deactivate account till it is confirmed
-            user = form.save(commit=False)
-            user.save()
-            activateEmail(request, user, form.cleaned_data.get("email"))  
+            user = form.save()
+            send_welcome_email(user)  # Send welcome email
+            messages.success(request, "Account created successfully! A welcome email has been sent to your email address.")
             return redirect('login')
+        else:
+            messages.error(request, "Please correct the errors below.")
+            return render(request, 'signup.html', {'form': form})
     else:
         form = SignUpForm()
+    return render(request, 'signup.html', {'form': form})
 
-    return render(request, 'signup.html',{'signupform': form})
 
 # Contact Form
 @csrf_protect

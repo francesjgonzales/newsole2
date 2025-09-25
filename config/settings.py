@@ -64,6 +64,7 @@ INSTALLED_APPS = [
     'cloudinary',
     'multiselectfield',
     'core',  
+    'accounts',
     'checkout',
     'allauth',
     'allauth.account',
@@ -254,11 +255,13 @@ SOCIALACCOUNT_PROVIDERS = {
 
 # Custom User Model 
 # Tell Django to use the custom user model
-settings.AUTH_USER_MODEL = 'accounts.CustomUser'
+# settings.AUTH_USER_MODEL = 'accounts.CustomUser'
 # Hook the custom user model
-ACCOUNT_FORMS = {
-    'signup': 'accounts.custom_forms.CustomSignupForm',
-}# Session settings
+# ACCOUNT_FORMS = {
+#     'signup': 'accounts.custom_forms.CustomSignupForm',
+# }
+
+# Session settings
 SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
 
 

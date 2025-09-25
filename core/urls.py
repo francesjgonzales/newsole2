@@ -1,5 +1,7 @@
-from django.urls import path
+from django.urls import path, include
 from django.contrib.auth import views as auth_views
+
+from core.forms import CustomUserCreationForm
 from . import views
 from django.contrib import admin
 
@@ -19,7 +21,8 @@ urlpatterns = [
     path('cart/move-to-wishlist/<int:shoe_id>/', views.move_cart_to_wishlist, name='move_cart_to_wishlist'),
 
     path('success/', views.home, name='home'),
-    path('accounts/signup/', views.signup, name='signup'),
+    path('accounts/', include('allauth.urls')),
+    path('accounts/signup/', views.SignUp, name='signup'),
     path('accounts/login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
 
@@ -28,5 +31,4 @@ urlpatterns = [
     path('wishlist/', views.view_wishlist, name='view_wishlist'),
     path('wishlist/move-to-cart/<int:shoe_id>/', views.move_wishlist_to_cart, name='move_wishlist_to_cart'),
     path('admin/login/', admin.site.index, name='admin'),
-
 ]
