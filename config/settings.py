@@ -43,7 +43,7 @@ CSRF_TRUSTED_ORIGINS = [
     "https://newsole2.onrender.com/"
 ]
 
-DOMAIN = 'http://localhost:8000' if DEBUG else 'https://newsole2.onrender.com'
+DOMAIN = 'https://newsole2.onrender.com'
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
 
