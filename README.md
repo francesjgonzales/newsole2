@@ -2,6 +2,8 @@
 
 A Django-based e-commerce app for selling limited edition shoes, featuring product browsing, wishlist management, and a shopping cart system.
 
+Update October 4 2025: Render's database free tier has expired. Created another free tier cause I'm broke. 😢
+
 ## Features Summary
 
 - **Product Listings** – Browse limited edition shoes.

@@ -27,7 +27,7 @@ def checkout(request):
         }
 
         if not shoe.stripe_price_id:
-            raise Exception(f"Product {shoe.name} is not available for purchase.")
+            raise Exception(f"Product {shoe.stripe_price_id} is not available for purchase.")
         
         line_items.append(item)
         all_items.append({
