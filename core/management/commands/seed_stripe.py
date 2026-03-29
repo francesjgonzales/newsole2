@@ -1,40 +1,40 @@
 import stripe
 from django.core.management.base import BaseCommand
+from core.models import Shoe  # adjust if your model name/path differs
 from django.conf import settings
-from core.models import Shoe
-
-stripe.api_key = settings.STRIPE_API_KEY
 
 class Command(BaseCommand):
-    help = "Seed Shoe data to Stripe (create products & prices on Stripe for each Shoe)"
+    help = "Create products and prices in Stripe based on Shoe model data"
 
     def handle(self, *args, **options):
         stripe.api_key = settings.STRIPE_API_KEY
+        created = 0
+        updated = 0
 
         for shoe in Shoe.objects.all():
-            if not shoe.stripe_product_id:
-                print(f"Creating Stripe product for {shoe.name}...")
-                # Create product
-                product = stripe.Product.create(
-                    name=shoe.name,
-                    description=shoe.description,
-                    images=[shoe.image.url] if shoe.image else None,
-                )
-                shoe.stripe_product_id = product.id
-            else:
-                print(f"Stripe product already exists for {shoe.name}")
+            # Skip if already seeded
+            if shoe.stripe_price_id:
+                self.stdout.write(self.style.WARNING(f"⚠️ {shoe.name} already has a Stripe price ID. Skipping..."))
+                continue
 
-            if not shoe.stripe_price_id:
-                print(f"Creating Stripe price for {shoe.name}...")
-                # Create price
-                price = stripe.Price.create(
-                    unit_amount=int(shoe.price * 100),  # cents
-                    currency="usd",  # or your currency
-                    product=shoe.stripe_product_id,
-                )
-                shoe.stripe_price_id = price.id
-            else:
-                print(f"Stripe price already exists for {shoe.name}")
+            # Step 1: Create Stripe Product
+            product = stripe.Product.create(
+                name=shoe.name,
+                description=shoe.description or "",
+            )
 
+            # Step 2: Create Stripe Price
+            price = stripe.Price.create(
+                unit_amount=int(shoe.price * 100),  # Stripe expects cents
+                currency="usd",
+                product=product.id,
+            )
+
+            # Step 3: Save Stripe IDs to Django model
+            shoe.stripe_price_id = price.id
             shoe.save()
-        print("Seeding to Stripe complete.")
+
+            created += 1
+            self.stdout.write(self.style.SUCCESS(f"✅ Created: {shoe.name} ({price.id})"))
+
+        self.stdout.write(self.style.SUCCESS(f"\n🎉 Done! {created} products created, {updated} updated."))
